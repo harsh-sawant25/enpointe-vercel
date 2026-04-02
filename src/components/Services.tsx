@@ -1,20 +1,20 @@
 "use client";
 import React, { useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, Variants } from 'framer-motion';
 
-const revealVariant = {
+const revealVariant: Variants = {
     hidden: { opacity: 0, y: 60 },
     visible: {
         opacity: 1,
         y: 0,
         transition: {
             duration: 1.2,
-            ease: [0.16, 1, 0.3, 1] // Custom quintic ease-out for smoothness
+            ease: [0.16, 1, 0.3, 1] as const
         }
     }
 };
 
-const staggerContainer = {
+const staggerContainer: Variants = {
     hidden: { opacity: 0 },
     visible: {
         opacity: 1,
