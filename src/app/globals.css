@@ -1,0 +1,387 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../../public/fonts/Inter-Regular.otf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+body {
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
+@layer utilities {
+  .shape-transition {
+    transition: border-radius 0.3s cubic-bezier(0.2, 0, 0.38, 0.9), transform 0.3s cubic-bezier(0.2, 0, 0.38, 0.9);
+  }
+  .rounded-stadium {
+    border-radius: 50% / 20%;
+  }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 1s infinite;
+}
+
+@layer utilities {
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+  .hide-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+}
+
+
+/* Add this to your global.css or appropriate stylesheet */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation class that gets added when element is in viewport */
+.animate-in {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+@layer utilities {
+  .stroke-1 {
+    -webkit-text-stroke: 1px black;
+  }
+  .stroke-black {
+    color: transparent;
+    -webkit-text-stroke: 1px black;
+  }
+}
+
+@keyframes gradient-marquee {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+
+.dev-media_media__eQq_h {
+  position: relative;
+  width: 365px;
+  height: 780px;
+  border-radius: inherit
+}
+
+.dev-media_media_preview__hjQcj {
+  border-radius: inherit!important;
+  position: relative!important;
+  object-fit: cover!important;
+  object-position: center!important
+}
+
+@media screen and (max-width: 1600px) {
+  .dev-media_media__eQq_h {
+      width:310.25px;
+      height: 660.5px
+  }
+}
+
+@media screen and (max-width: 1124px) {
+  .dev-media_media__eQq_h {
+      width:200.75px;
+      height: 430.5px
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .dev-media_media__eQq_h {
+      width:150px;
+      height: 320px
+  }
+}
+
+
+.dev-media_media_preview__hjQcj {
+  border-radius: inherit!important;
+  position: relative!important;
+  object-fit: cover!important;
+  object-position: center!important
+}
+
+
+.development_dev_hand__1L3Gd {
+  margin: auto auto 0;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: 940px;
+  overflow: hidden;
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  will-change: transform;
+  translate: none;
+  rotate: none;
+  scale: none;
+  pointer-events: none
+}
+
+.development_dev_hand_wrapper__yXHKJ {
+  position: absolute;
+  left: 0;
+  top: -30px;
+  width: 100%;
+  height: calc(100% + 30px);
+  display: flex;
+  flex-direction: column
+}
+
+.development_dev_hand_image__s8v9J {
+  flex-shrink: 0;
+  min-width: 1870px!important;
+  width: 1870px!important;
+  height: auto!important;
+  position: relative!important;
+  object-fit: cover;
+  object-position: center top
+}
+
+
+
+.development_dev_screens_wrapper__iDJ0j {
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center
+}
+
+.dev-screens_screens__ULiw1 {
+  padding-bottom: 115px
+}
+
+
+
+.dev-screens_screens_item__x7szP {
+  margin: 12.8px;
+  flex-shrink: 0;
+  position: relative;
+  border-radius: 44px
+}
+
+
+@media screen and (max-height: 780px) {
+  .dev-screens_screens__ULiw1 {
+      padding-bottom:40px
+  }
+}
+
+@media screen and (max-width: 465px) {
+  .dev-screens_screens__ULiw1 {
+      padding-bottom:110px
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  .dev-screens_screens__ULiw1 {
+      padding-bottom:40px
+  }
+
+  .dev-screens_screens_item__x7szP {
+      border-radius: 46.75px
+  }
+}
+
+@media screen and (max-width: 1124px) {
+  .dev-screens_screens_item__x7szP {
+      border-radius:30.25px
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .dev-screens_screens_item__x7szP {
+      border-radius:20px
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .dev-screens_screens_item__x7szP {
+      margin:8px
+  }
+}
+
+
+
+@media screen and (max-height: 780px) {
+  .development_dev_hand__1L3Gd {
+      height:740px
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  .development_dev_hand__1L3Gd {
+      height:740px
+  }
+
+  .development_dev_hand_image__s8v9J {
+      width: 1589.5px!important;
+      min-width: 1589.5px!important
+  }
+
+}
+
+@media screen and (max-width: 1124px) {
+  .development_dev_hand__1L3Gd {
+      height:auto;
+      height: 500px
+  }
+
+  .development_dev_hand_wrapper__yXHKJ {
+      top: -15px;
+      width: 100%;
+      height: calc(100% + 15px)
+  }
+
+  .development_dev_hand_image__s8v9J {
+      width: 1028.5px!important;
+      min-width: 1028.5px!important;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  /* .development_dev_screens__L4P5Z {
+      margin-top:200px
+  } */
+
+  .development_dev_phones__dI9l6 {
+      top: 160px;
+      width: 420px;
+      height: 480.9px
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .development_dev_phones__dI9l6 {
+      width:349.8px;
+      height: 400.521px;
+      top: 254px
+  }
+
+  
+  .development_dev_hand__1L3Gd {
+      height: 380px
+  }
+
+  .development_dev_hand_image__s8v9J {
+      width: 770px!important;
+      min-width: 770px!important;
+  }
+}
+
+/* @media screen and (max-width: 465px) {
+  .development_dev_hand__1L3Gd {
+      height:450px
+  }
+} */
+
+.dev-video_video__tvEzd {
+  position: absolute;
+  z-index: 2;
+  width: 348px;
+  height: 741px;
+  top: 56px;
+  border-radius: 42px
+}
+
+.dev-video_video__tvEzd video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: inherit
+}
+
+@media screen and (max-width: 1600px) {
+  .dev-video_video__tvEzd {
+      width:297px;
+      height: 630px;
+      top: 48px;
+      border-radius: 35px
+  }
+}
+
+@media screen and (max-width: 1124px) {
+  .dev-video_video__tvEzd {
+      width:193px;
+      height: 405px;
+      top: 31px;
+      border-radius: 22px
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .dev-video_video__tvEzd {
+      width:145px;
+      height: 305px;
+      top: 23px;
+      border-radius: 18px
+  }
+}
+
+/* Safari SVG rendering fixes */
+.safari-svg-fix {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Specific Safari browser optimizations */
+@supports (-webkit-appearance: none) {
+  .safari-svg-fix {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+}

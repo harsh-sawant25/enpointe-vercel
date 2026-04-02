@@ -1,0 +1,333 @@
+[
+  {
+    "id": 1,
+    "projectlogo": "/CIPL CSC.png",
+    "bannerimg": "/CIPL CS M1.png",
+    "testimonialBanner": "/Cinepolis-Banner.png",
+    "testinomialDescription": "Redefining Moviegoing Experience.",
+    "landScapeView": false,
+    "width": 245,
+    "height": 495,
+    "title": "Cinepolis",
+    "subtitle": "Redefining Moviegoing Experience",
+    "platform": "Mobile Apps, Website",
+    "services": "Research, Design, Development & Growth",
+    "googleplay": "https://play.google.com/store/apps/details?id=com.ia.cinepolis.india",
+    "appstore": "https://apps.apple.com/in/app/cin%C3%A9polis-india/id491330571",
+    "description": "Cinepolis India is a leading cinema chain offering world-class movie experiences across the country.",
+    "challenges": {
+      "title": "Market Gaps",
+      "description": "The previous platform faced challenges in providing a seamless booking experience across all digital channels. Users encountered difficulties in selecting F&B items and applying offers during the booking process, leading to incomplete or abandoned transactions. Additionally, implementing updates required changes in multiple sections.",
+      "image": "/Cinepolis-Mockup1.png",
+      "width": 591,
+      "height": 584,
+      "imageHeight": "h-auto md:h-[85dvh]"
+    },
+    "solution": {
+      "title": "Innovative Solution",
+      "description": "A streamlined user journey was designed with minimal steps to book tickets, including an intuitive interface for selecting F&B items and applying available offers or promotions. Strengthened payment gateway integrations ensured secure and efficient transactions. A dynamic CMS enabled real-time content updates across all channels.",
+      "image": "/CIPL CS M2.png",
+      "width": 487,
+      "height": 555,
+      "imageHeight": "h-auto md:h-[85dvh]"
+    },
+    "features": {
+      "title": "Key Features",
+      "description": "Cinepolis offers a seamless booking experience with a user-friendly interface, enabling quick ticket purchases, F&B selection, and multiple payment options. Its dynamic CMS and multi-channel support ensure real-time updates and a unified experience across web, mobile, and kiosks.",
+      "featuresList": [
+        "Loyalty Registration",
+        "Offers & Promotions",
+        "Seamless Payment Gateways",
+        "Quickbook Feature",
+        "Dynamic CMS Access",
+        "Enhanced F&B Integration"
+      ],
+      "image": "/CIPL CS M3.png",
+      "width": 487,
+      "height": 643,
+      "imageHeight": "h-auto md:h-[85dvh]"
+    },
+    "card": {
+      "logoimage": "/PM Logo CSC.png",
+      "description": "People Matters is an HR media platform dedicated to fostering ideas among HR professionals through its magazine.",
+      "image": "/PM CSC.png",
+      "width": 336,
+      "height": 252
+    }
+  },
+  {
+    "id": 2,
+    "projectlogo": "/PM Logo CSC.png",
+    "bannerimg": "/PM CS M1.png",
+    "testimonialBanner": "/People-Matters-Banner.png",
+    "testinomialDescription": "Powering Digital Workforce Evolution.",
+    "landScapeView": false,
+    "width": 256,
+    "height": 517,
+    "title": "People Matters",
+    "subtitle": "Powering Digital Workforce Evolution",
+    "platform": "Mobile Apps, Website",
+    "services": "Research, Design, Development & Growth",
+    "googleplay": "https://play.google.com/store/apps/details?id=com.magzter.peoplematters&pcampaignid=web_share",
+    "appstore": "https://apps.apple.com/in/app/peoplematters-monthly-magazine/id1163683490",
+    "description": "People Matters is an HR media platform dedicated to fostering ideas among HR professionals through its magazine.",
+    "challenges": {
+      "title": "Industry Challenges",
+      "description": " People Matters faced challenges due to a fragmented digital infrastructure that led to inconsistent user experiences. The absence of a centralized content management system made organizing and distributing various content types complex and inefficient. Limited data utilization restricted the ability to deliver personalized engagement, while disconnected communication tools created workflow inefficiencies. Additionally, CRM limitations hindered growth by restricting advanced segmentation and automation capabilities.",
+      "image": "/PM CS M2.png",
+      "width": 517,
+      "height": 563,
+      "imageHeight": "h-auto md:h-[90dvh]"
+    },
+    "solution": {
+      "title": "Strategic Solutions",
+      "description": "The digital transformation introduced a modern CMS, improving communication and analytics. A unified content platform streamlined approval workflows and asset management. Advanced analytics optimized content performance, while an integrated communication framework enabled audience segmentation and behavioral triggers. Additionally, an advanced CRM with lead scoring and content personalization enhanced business systems.",
+      "image": "/PM CS M3.png",
+      "width": 640,
+      "height": 480,
+      "imageHeight": "h-auto md:h-[65dvh]"
+    },
+    "features": {
+      "title": "Key Features",
+      "description": "The system features multi-region support with localization, ensuring a tailored experience for diverse audiences. Personalized content recommendations and cross-device availability enhance user engagement. Unified campaign management streamlines marketing efforts with automated communication sequences, while comprehensive analytics and real-time user tracking provide valuable insights for optimization.",
+      "featuresList": [
+        "Centralized Content Management",
+        "Multi-Region support ",
+        "Personalized User Experience",
+        "Advanced Analytics",
+        "Integrated Communication Tools",
+        "Enhanced CRM Capabilities"
+      ],
+      "image": "/PM CS M4.png",
+      "width": 400,
+      "height": 646,
+      "imageHeight": "h-auto md:h-[85dvh]"
+    },
+    "card": {
+      "logoimage": "/Outlook.svg",
+      "description": "Outlook India is a leading media platform delivering comprehensive news, incisive analysis, current affairs coverage, and in-depth reporting across diverse topics including politics, economy, culture, sports, and entertainment. It provides balanced perspectives through its web platform, digital publications, and traditional print formats catering to readers seeking substantive journalism.",
+      "image": "/Outlook CSC.png",
+      "width": 309,
+      "height": 306
+    }
+  },
+  {
+    "id": 3,
+    "projectlogo": "/Outlook.svg",
+    "bannerimg": "/Outlook CS M1.png",
+    "testimonialBanner": "/Outlook-India-Banner.png",
+    "testinomialDescription": "Enhancing Tech Infrastructure Security.",
+    "landScapeView": false,
+    "width": 265,
+    "height": 535,
+    "title": "Outlook",
+    "subtitle": "Enhancing Tech Infrastructure Security",
+    "platform": "Mobile Apps, Website",
+    "services": "Design, Development & Growth",
+    "googleplay": "https://play.google.com/store/apps/details?id=com.magzter.outlookindia&pcampaignid=web_share",
+    "appstore": "https://apps.apple.com/in/app/outlook/id486362804",
+    "description": "Outlook India is a prominent media platform delivering news analysis.",
+    "challenges": {
+      "title": "Industry Challenges",
+      "description": "Ineffective technology choices often lead to inefficiencies, impacting overall performance and productivity. The absence of proper bandwidth analysis results in higher costs affecting long-term scalability. Relying on temporary fixes instead of implementing permanent solutions creates recurring issues and operational disruptions. Additionally, overlooking critical vulnerabilities can lead to significant security risks, making systems prone to data breaches and potential cyber threats.",
+      "image": "/Outlook CS M2.png",
+      "width": 842,
+      "height": 520,
+      "imageHeight": "h-auto "
+    },
+    "solution": {
+      "title": "Strategic Solutions",
+      "description": "We assessed the requirements to implement the right technology stack, ensuring efficiency and eliminating unnecessary add-ons. A thorough product and bandwidth analysis was conducted to optimize costs without affecting performance. Real-time fixes were introduced to remove patchwork solutions and minimize maintenance disruptions during peak hours. Additionally, recurring issues were resolved to enhance overall system stability and productivity. To strengthen security, a dedicated cybersecurity team was engaged to identify vulnerabilities and prevent potential threats.",
+      "image": "/Outlook CSC.png",
+      "width": 518,
+      "height": 513,
+      "imageHeight": "h-auto md:h-[85dvh]"
+    },
+    "features": {
+      "title": "Key Features",
+      "description": "The system was designed with multi-region support and localization to cater to diverse audiences effectively. Personalized content recommendations and cross-device availability enhanced user engagement, ensuring a seamless experience across platforms. A unified campaign management system streamlined marketing efforts with automated communication sequences, while comprehensive analytics and real-time user tracking provided valuable insights for continuous optimization and improved decision-making.",
+      "featuresList": [
+        "Optimized Technology Implementation",
+        "Bandwidth Analysis",
+        "Real-Time Fixes & Maintenance",
+        "Advanced Analytics",
+        "Scalability & Future-Proofing",
+        "Enhanced Security Measures"
+      ],
+      "image": "/Outlook CS M3.png",
+      "width": 703,
+      "height": 468,
+      "imageHeight": "h-auto "
+    },
+    "card": {
+      "logoimage": "/nuvio.png",
+      "description": "A comprehensive cinema management system that streamlines ticketing, F&B sales, and real-time data synchronization across multiple platforms. It enhances operational efficiency by integrating POS systems mobile apps, and kiosks into a unified solution.",
+      "image": "/Brij CSC M1.png",
+      "width": 365,
+      "height": 299
+    }
+  },
+  {
+    "id": 4,
+    "projectlogo": "/nuvio.png",
+    "bannerimg": "/Brij CS M1.png",
+    "testimonialBanner": "/Nuvio-Digital.png",
+    "testinomialDescription": "The All-in-One Cinema Management Software",
+    "landScapeView": false,
+    "width": 285,
+    "height": 576,
+    "title": "Nuvio",
+    "subtitle": "The All-in-One Cinema Management Software",
+    "platform": "Mobile Apps, Website",
+    "services": "Research, Design, Development & Growth",
+    "description": "It is a comprehensive cinema management solution designed to enhance operational efficiency, improve customer experience, and reduce operational costs. Tailored for cinema operators, the platform integrates seamlessly with box office management, F&B ordering, marketing automation, digital signage, and customer loyalty programs. It supports both mobile and kiosk-based interfaces, providing a flexible and scalable solution for cinema chains and individual locations",
+    "challenges": {
+      "title": "Industry Challenges",
+      "description": "Cinema businesses struggle with fragmented and inefficient systems that hinder growth, reduce profitability, and make it difficult to adapt to evolving customer expectations. These systems often come with high upfront costs, legacy infrastructure, and long wait times for updates or upgrades.",
+      "image": "/Elevate M1.png",
+      "width": 655,
+      "height": 519,
+      "imageHeight": "h-auto "
+    },
+    "solution": {
+      "title": "Strategic Solutions",
+      "description": "It provides an all-in-one, cloud-based solution that addresses the key challenges faced by cinema operators. Through its mobile and web platforms, Elevate offers, Cloud First Approach which ensures ease of access and minimal hardware investment. Digital Signage Management that consolidates cinema displays, from movie showtimes to F&B ads, in one central platform. Mobile App & Kiosk Integration, Streamlines the ticketing, F&B ordering, and customer loyalty experience. Third-Party Integrations which offers seamless integration with popular ERP systems (Microsoft, Tally), POS systems, and other third-party tools. Real-Time Analytics & Reporting that provides detailed insights into sales, customer behavior, and inventory to aid in strategic decision-making.",
+      "image": "/Brij CSC M1.png",
+      "width": 619,
+      "height": 508,
+      "imageHeight": "h-auto md:h-[80dvh]"
+    },
+    "features": {
+      "title": "Key Features",
+      "description": "Box Office and Concessions Integration that supports seamless ticket booking, concessions sales, and customer loyalty management across various channels (web, mobile app, kiosk). The marketing suite includes automation for promotions, offers, and loyalty programs, increasing engagement and sales. Managers have real-time visibility into sales, customer interactions, and inventory, empowering them to make informed decisions. Customers can order food directly from their mobile device using a QR code, reducing wait times and increasing in-cinema sales. Over 50 predefined reports and a customizable report builder ensure efficient financial tracking, auditing, and compliance. Upcoming pricing and scheduling capabilities help cinema chains optimize revenue based on demand patterns.",
+      "featuresList": [
+        "Box office and Concessions",
+        "Kiosk, Website & Mobile Application",
+        "Reporting & Audit Module",
+        "Digital Signage Management",
+        "Marketing Suite (Automation)",
+        "Promotional Offers and Loyalty"
+      ],
+      "image": "/Brij CS M2.png",
+      "width": 500,
+      "height": 382,
+      "imageHeight": "h-auto"
+    },
+    "card": {
+      "logoimage": "/Corsymo Logo CSC.png",
+      "description": "Corsymo is a admin dashboard template providing a customizable interface for web applications.",
+      "image": "/Corsymo CSC M1.png",
+      "width": 398,
+      "height": 327
+    }
+  },
+  {
+    "id": 5,
+    "projectlogo": "/Corsymo Logo CSC.png",
+    "bannerimg": "/Corsymo CSC M2.png",
+    "testimonialBanner": "/Corosymo-Banner.png",
+    "testinomialDescription": "The Ultimate Rights Management Solution",
+    "landScapeView": true,
+    "width": 285,
+    "height": 576,
+    "title": "Corsymo",
+    "subtitle": "The Ultimate Rights Management Solution",
+    "platform": "Website",
+    "services": "Research, Design, Development & Growth",
+    "description": "CORSYMO is an all-in-one cloud-based platform Transforming Rights Management for the Entertainment Industry.",
+    "challenges": {
+      "title": "Operational Challenges",
+      "description": "Entertainment companies often face difficulties in tracking and managing a large number of contracts and rights. Manual royalty accounting leads to delays, errors, and missed revenue opportunities. Limited visibility into rights acquisition and sales adds to the confusion. Traditional systems make it harder for teams to access important information quickly, slowing down operations and decision-making.",
+      "image": "/Corsymo CSC M3.png",
+      "width": 676,
+      "height": 543,
+      "imageHeight": "h-auto"
+    },
+    "solution": {
+      "title": "Tailored Approach",
+      "description": "CORSYMO was built as an easy-to-use, cloud-based platform designed specifically for the entertainment industry. It centralizes contract, rights, and royalty management in one place, making workflows smoother and more efficient. With CORSYMO, teams can quickly find contracts, manage royalties, and track rights acquisition and sales from a single dashboard, helping them work faster and smarter.",
+      "image": "/Corsymo CSC M4.png",
+      "width": 808,
+      "height": 538,
+      "imageHeight": "h-auto"
+    },
+    "features": {
+      "title": "Key Features",
+      "description": "CORSYMO provides all the tools entertainment professionals need to manage their intellectual property with ease. It offers simple contract management, customizable royalty accounting, and an easy way to track rights sales. The platform’s centralized dashboard ensures you can view everything in one place. With an intuitive design, CORSYMO is easy to use and helps teams operate more efficiently.",
+      "featuresList": [
+        "Contract Management",
+        "Royalty Accounting",
+        "Rights Sales Management",
+        "Centralized Dashboard",
+        "Intuitive Interface"
+      ],
+      "image": "/Corsymo CSC M5.png",
+      "width": 621,
+      "height": 493,
+      "imageHeight": "h-auto"
+    },
+    "card": {
+      "logoimage": "/Kozo Logo CSC.png",
+      "description": "A single platform to manage every kind of expense from petty cash to vendor advances from invoices to credit notes and more.",
+      "image": "/Kozo Logo CSC 1.png",
+      "width": 301,
+      "height": 234
+    }
+  },
+  {
+    "id": 6,
+    "projectlogo": "/Kozo Logo CSC.png",
+    "bannerimg": "/Kozo Logo CSC M1.png",
+    "testimonialBanner": "/Kozo-Banner.png",
+    "testinomialDescription": "Structuring and Streamlining On-Set Finances.",
+    "landScapeView": true,
+    "width": 285,
+    "height": 576,
+    "title": "Kozo",
+    "subtitle": "Structuring and Streamlining On-Set Finances",
+    "platform": "Mobile App(iOS & Android), Web Dashboard",
+    "services": "Research, Design, Development & Growth",
+    "description": "Kozo is a unified expense management platform crafted specifically for production houses and adaptable across industries. It enables teams to manage every type of expense — from petty cash to vendor advances, invoices to credit notes — all from a single, easy-to-use system. Kozo improves financial workflows by eliminating paper trails, delays, and inaccuracies, empowering businesses with greater efficiency and transparency.",
+    "challenges": {
+      "title": "Operational Challenges",
+      "description": "Production companies often grapple with disorganized expense tracking, approval delays, policy violations, and inconsistent documentation. These inefficiencies result in budgeting errors, financial bottlenecks, and compromised accountability.",
+      "image": "/Kozo Logo CSC M2.png",
+      "width": 473,
+      "height": 322,
+      "imageHeight": "h-auto"
+    },
+    "solution": {
+      "title": "Strategic Approach",
+      "description": "Kozo solves these challenges through a seamless, mobile-first platform integrated with a powerful web dashboard. By enabling real-time expense tracking, structured approval workflows, and smart analytics, Kozo empowers users to maintain complete financial control and compliance.",
+      "image": "/Kozo Logo CSC M3.png",
+      "width": 510,
+      "height": 396,
+      "imageHeight": "h-auto "
+    },
+    "features": {
+      "title": "Key Features",
+      "description": "Capture and log expenses instantly, directly from the source (petty cash, vendor advance, etc.) ensuring data accuracy. Connect easily with tools like Tally, QuickBooks, SAP, Gmail, WhatsApp, and more via Kozo’s API. Support multi-level approvals and special cases like policy violations automatically. View budget vs. actual spends simultaneously with dynamic budget sheets and detailed reporting. Approve expenses, receive notifications, and manage budgets on-the-go with Android and iOS apps. Ensure proper documentation and regulatory compliance for every financial entry. Automatically detect and avoid redundant invoice uploads. Support for managing commercials, post-productions, ATL, BTL, and custom templates. Generate city-wise summaries, approver time-tracking, compliance reports, and detailed expense logs.",
+      "featuresList": [
+        "Dashboard",
+        "Projects",
+        "Users",
+        "Vendors",
+        "Expenses",
+        "Budgets",
+        "Petty Cash Requests",
+        "Vendor Advances",
+        "Credit Notes",
+        "Settings (Master Configuration)"
+      ],
+      "image": "/Kozo Logo CSC M4.png",
+      "width": 566,
+      "height": 369,
+      "imageHeight": "h-auto"
+    },
+    "card": {
+      "logoimage": "/CIPL CSC.png",
+      "description": "Cinepolis India is a leading cinema chain offering world-class movie experiences across the country.",
+      "image": "/CIPL M1.png"
+    }
+  }
+]
