@@ -139,7 +139,7 @@ const Hero = () => {
             className="flex items-center gap-2 mb-8"
           >
             {/* Tiny dot — matches framer source exactly (small 6px solid dot + pulsing ring) */}
-            <div className="relative flex items-center justify-center w-3 h-3">
+            {/* <div className="relative flex items-center justify-center w-3 h-3">
               <motion.div
                 animate={{ scale: [1, 2.2, 1], opacity: [0.6, 0, 0.6] }}
                 transition={{
@@ -150,7 +150,7 @@ const Hero = () => {
                 className="absolute inset-0 rounded-full bg-[#94D1FF] blur-[2px]"
               />
               <div className="relative w-[6px] h-[6px] bg-[#A6DAFF] rounded-full shadow-[0_0_10px_rgba(168,209,255,0.6)]" />
-            </div>
+            </div> */}
             <span className="text-[#ffffff99] text-[14px] font-semibold tracking-[0.15em] uppercase">
               YOUR TRUSTED ENGINEERING PARTNER
             </span>
@@ -181,7 +181,7 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="mt-5 mb-10 text-white/60 font-normal text-[16px] max-w-[520px] mx-auto text-center"
           >
-            We build systems that bring intelligence into modern businesses.
+            We build systems that bring intelligence into modern businesses — from AI transformation to enterprise-grade platforms.
           </motion.p>
 
           {/* Button */}
@@ -303,7 +303,7 @@ const Hero = () => {
       </section >
 
       {/* ── Founder Note ── */}
-      < section
+      {/* < section
         id="founder-note"
         className="relative w-full bg-white rounded-t-[40px] md:rounded-t-[80px] -mt-[40px] md:-mt-[70px] z-20"
       >
@@ -334,12 +334,12 @@ const Hero = () => {
               >
                 technology working together
               </span>
-              . We build the technology that makes this possible
+              . <br /> We build the technology that makes this possible
             </h3>
           </motion.div>
         </div>
         <div className="w-full h-[1px] bg-black/[0.1]" />
-      </section >
+      </section > */}
     </>
   );
 };

@@ -15,12 +15,11 @@ const navItems = [
       "Media & Entertainment",
       "Experience & Attractions",
       "Retail & Logistics",
-      "Publishing",
-      "Ecommerce"
+      "Publishing & Ecommerce",
     ]
   },
   { label: "AI Transformation", href: "/ai", subItems: ["AI Solution", "AI Products"] },
-  { label: "Products", href: "/products", subItems: ["Retail Media & Entertainment", "AI Products"] },
+  { label: "Products", href: "/products", subItems: ["Retail Media & Entertainment", "Productivity Tools"] },
   { label: "About Us", href: "/about" },
 ];
 
@@ -143,7 +142,7 @@ const Navbar = () => {
                         {item.subItems.map((sub, sIdx) => (
                           <Link
                             key={sIdx}
-                            href={`/industries/${sub.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
+                            href={`${item.href}/${sub.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
                             className="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-white/5 transition-colors group/sub"
                           >
                             <span className="text-[14px] text-white/70 group-hover/sub:text-white transition-colors">
@@ -290,7 +289,7 @@ const Navbar = () => {
                         {item.subItems.map((sub, sIdx) => (
                           <Link
                             key={sIdx}
-                            href={`/industries/${sub.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
+                            href={`${item.href}/${sub.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
                             className="text-lg text-white/50 hover:text-white transition-colors"
                             onClick={closeMenu}
                           >

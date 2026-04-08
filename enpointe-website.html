@@ -1,0 +1,2085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enpointe — Engineering Intelligence At Scale</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #080808;
+  --off-black: #111111;
+  --dark: #161616;
+  --mid: #222222;
+  --border: rgba(255,255,255,0.08);
+  --white: #f5f5f0;
+  --off-white: #e8e8e3;
+  --muted: rgba(245,245,240,0.5);
+  --accent: #00e5c8;
+  --accent2: #1a6eff;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+  height: 64px;
+  background: rgba(8,8,8,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  cursor: pointer;
+  text-decoration: none;
+}
+.nav-logo span { color: var(--accent); }
+
+.nav-links {
+  display: flex; align-items: center; gap: 8px;
+  list-style: none;
+}
+.nav-links li { position: relative; }
+
+.nav-links > li > a, .nav-links > li > button {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--muted);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  display: flex; align-items: center; gap: 5px;
+}
+.nav-links > li > a:hover, .nav-links > li > button:hover { color: var(--white); }
+
+.nav-cta {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--black);
+  background: var(--white);
+  border: none;
+  padding: 10px 22px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.nav-cta:hover { background: var(--accent); }
+
+.dropdown {
+  position: absolute; top: 100%; left: 0;
+  background: var(--off-black);
+  border: 1px solid var(--border);
+  min-width: 230px;
+  padding: 8px 0;
+  opacity: 0; pointer-events: none;
+  transform: translateY(8px);
+  transition: all 0.2s;
+}
+.nav-links li:hover .dropdown { opacity: 1; pointer-events: all; transform: none; }
+
+.dropdown a {
+  display: block;
+  padding: 10px 20px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  transition: color 0.15s, background 0.15s;
+}
+.dropdown a:hover { color: var(--white); background: rgba(255,255,255,0.04); }
+
+.chevron { font-size: 0.6rem; }
+
+/* ─── PAGE WRAPPER ─── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ─── SECTIONS ─── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 140px 40px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 30%, rgba(0,229,200,0.06) 0%, transparent 70%),
+              radial-gradient(ellipse 50% 50% at 20% 80%, rgba(26,110,255,0.05) 0%, transparent 60%);
+}
+
+.hero-tag {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 28px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-tag::before, .hero-tag::after {
+  content: ''; display: block; width: 28px; height: 1px; background: var(--accent);
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 7.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 28px;
+}
+.hero h1 em { font-style: italic; color: var(--accent); font-weight: 700; }
+
+.hero-sub {
+  font-size: 1.05rem;
+  color: var(--muted);
+  max-width: 540px;
+  margin: 0 auto 40px;
+  font-weight: 300;
+}
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 16px 32px;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+.btn-primary svg { width: 14px; height: 14px; }
+
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: transparent;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.25);
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+.scroll-hint {
+  position: absolute; bottom: 36px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px; height: 48px;
+  background: linear-gradient(to bottom, transparent, var(--accent));
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse { 0%,100%{opacity:0.3;transform:scaleY(0.7)} 50%{opacity:1;transform:scaleY(1)} }
+
+/* ─── MARQUEE ─── */
+.marquee-wrap {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 0;
+  overflow: hidden;
+  background: var(--off-black);
+}
+.marquee-track {
+  display: flex; gap: 60px;
+  animation: marquee 30s linear infinite;
+  width: max-content;
+}
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.marquee-item {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.marquee-item span { color: var(--accent); margin-right: 60px; }
+
+/* ─── SECTION COMMON ─── */
+section {
+  padding: 100px 80px;
+}
+section.light {
+  background: var(--white);
+  color: var(--black);
+}
+section.dark {
+  background: var(--off-black);
+}
+section.black {
+  background: var(--black);
+}
+
+.section-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-label::before {
+  content: ''; display: block; width: 20px; height: 1px; background: currentColor;
+}
+
+.section-label.dark-label { color: #999; }
+.section-label.dark-label::before { background: #999; }
+
+h2.display {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  margin-bottom: 20px;
+}
+h2.display em { font-style: italic; color: var(--accent); }
+
+.light h2.display em { color: #000; }
+
+h3.display {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+p.lead {
+  font-size: 1.05rem;
+  color: var(--muted);
+  max-width: 580px;
+  font-weight: 300;
+  line-height: 1.75;
+}
+.light p.lead { color: #555; }
+
+/* ─── GRID LAYOUTS ─── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; }
+
+/* ─── STATS ROW ─── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 1px solid var(--border);
+}
+.stat-item {
+  padding: 48px 36px;
+  border-right: 1px solid var(--border);
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+.stat-num .accent { color: var(--accent); }
+.stat-label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+}
+
+/* ─── CARD ─── */
+.card {
+  border: 1px solid var(--border);
+  padding: 40px;
+  background: var(--off-black);
+  transition: border-color 0.3s, transform 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.card:hover { border-color: rgba(0,229,200,0.3); transform: translateY(-4px); }
+.card:hover::before { opacity: 1; }
+
+.card.light-card {
+  background: #fff;
+  border: 1px solid #e8e8e3;
+  color: var(--black);
+}
+.card.light-card:hover { border-color: #000; }
+.card.light-card::before { background: linear-gradient(90deg, transparent, #000, transparent); }
+
+.card-icon {
+  width: 44px; height: 44px;
+  background: rgba(0,229,200,0.1);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 24px;
+  font-size: 1.2rem;
+}
+
+.card h4 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+.card p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+.card.light-card p { color: #555; }
+
+/* ─── CASE STUDY CARD ─── */
+.case-card {
+  border: 1px solid var(--border);
+  background: var(--off-black);
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.case-card:hover { border-color: rgba(0,229,200,0.4); transform: translateY(-6px); }
+
+.case-card-header {
+  padding: 36px 36px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.case-client-tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.case-card-header h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.case-card-header p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+
+.case-card-metrics {
+  display: flex; gap: 0;
+}
+.case-metric {
+  flex: 1;
+  padding: 24px 28px;
+  border-right: 1px solid var(--border);
+}
+.case-metric:last-child { border-right: none; }
+.case-metric-num {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.case-metric-label { font-size: 0.72rem; color: var(--muted); line-height: 1.4; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* ─── LOGO GRID ─── */
+.logo-row {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 0;
+  border: 1px solid var(--border);
+}
+.logo-item {
+  flex: 1; min-width: 120px;
+  padding: 32px 40px;
+  border-right: 1px solid var(--border);
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.2s;
+  cursor: default;
+}
+.logo-item:last-child { border-right: none; }
+.logo-item:hover { color: var(--white); }
+
+/* ─── BIG TEXT SECTION ─── */
+.big-text-section {
+  padding: 100px 80px;
+  background: var(--white);
+  color: var(--black);
+}
+.big-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3.5vw, 2.6rem);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+.big-text strong { font-weight: 800; }
+.big-text em { font-style: italic; }
+
+/* ─── TECH STACK ─── */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.tech-item {
+  background: var(--off-black);
+  padding: 28px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+  transition: background 0.2s;
+}
+.tech-item:hover { background: var(--dark); color: var(--white); }
+.tech-item .tech-icon { font-size: 1.6rem; }
+
+/* ─── CTA BAND ─── */
+.cta-band {
+  background: var(--off-black);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-band::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(0,229,200,0.06) 0%, transparent 70%);
+}
+.cta-band h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+  position: relative;
+}
+.cta-band p { color: var(--muted); font-size: 0.95rem; margin-bottom: 36px; position: relative; }
+.cta-circle {
+  width: 54px; height: 54px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+}
+.cta-circle:hover { border-color: var(--accent); background: rgba(0,229,200,0.1); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--black);
+  border-top: 1px solid var(--border);
+  padding: 60px 80px 30px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.8fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+}
+.footer-logo span { color: var(--accent); }
+.footer-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+.footer-social { display: flex; gap: 12px; }
+.footer-social a {
+  font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none;
+  padding: 6px 12px; border: 1px solid var(--border);
+  transition: color 0.2s, border-color 0.2s;
+}
+.footer-social a:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+
+.footer-nav-title {
+  font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 18px;
+}
+.footer-nav-links { list-style: none; }
+.footer-nav-links li { margin-bottom: 10px; }
+.footer-nav-links a {
+  font-size: 0.85rem; color: rgba(245,245,240,0.6);
+  text-decoration: none; transition: color 0.2s;
+}
+.footer-nav-links a:hover { color: var(--white); }
+
+.footer-offices { display: flex; flex-direction: column; gap: 16px; }
+.footer-office-name {
+  font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 4px;
+}
+.footer-office-addr { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-copy { font-size: 0.75rem; color: var(--muted); }
+.footer-email { font-size: 0.75rem; color: var(--muted); }
+
+/* ─── PAGE HERO VARIANTS ─── */
+.page-hero {
+  padding: 160px 80px 80px;
+  min-height: 50vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.page-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 0% 100%, rgba(0,229,200,0.05) 0%, transparent 60%);
+}
+.page-hero .eyebrow {
+  font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 16px;
+}
+.page-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 8vw, 8rem);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  margin-bottom: 24px;
+}
+.page-hero p {
+  font-size: 1rem; color: var(--muted); max-width: 520px;
+  font-weight: 300; line-height: 1.7;
+}
+
+/* ─── PROCESS STEPS ─── */
+.process-list { counter-reset: step; }
+.process-step {
+  display: grid; grid-template-columns: 60px 1fr;
+  gap: 32px;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--border);
+  counter-increment: step;
+}
+.process-step:first-child { border-top: 1px solid var(--border); }
+.step-num {
+  font-family: var(--font-display);
+  font-size: 0.7rem; font-weight: 700;
+  color: var(--accent); letter-spacing: 0.1em;
+  padding-top: 4px;
+}
+.step-content h4 {
+  font-family: var(--font-display);
+  font-size: 1.2rem; font-weight: 700;
+  margin-bottom: 10px;
+}
+.step-content p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+
+/* ─── PRODUCT CARD ─── */
+.product-card {
+  border: 1px solid var(--border);
+  background: var(--off-black);
+  padding: 0;
+  overflow: hidden;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.product-card:hover { transform: translateY(-6px); border-color: rgba(0,229,200,0.3); }
+
+.product-card-header {
+  padding: 40px;
+  border-bottom: 1px solid var(--border);
+  background: var(--dark);
+  position: relative; overflow: hidden;
+}
+.product-card-header::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+.product-tag {
+  display: inline-block;
+  font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--accent); border: 1px solid rgba(0,229,200,0.3);
+  padding: 4px 10px; margin-bottom: 16px;
+}
+.product-card-header h3 {
+  font-family: var(--font-display);
+  font-size: 1.6rem; font-weight: 800;
+  letter-spacing: -0.02em; line-height: 1.1;
+  margin-bottom: 10px;
+}
+.product-card-header p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+
+.product-features {
+  padding: 32px 40px;
+}
+.product-feature {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.84rem; color: rgba(245,245,240,0.7);
+}
+.product-feature:last-child { border-bottom: none; }
+.feature-dot {
+  width: 6px; height: 6px; min-width: 6px;
+  background: var(--accent); border-radius: 50%;
+  margin-top: 6px;
+}
+
+/* ─── PILL TAGS ─── */
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.tag {
+  font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted); border: 1px solid var(--border);
+  padding: 5px 12px;
+}
+
+/* ─── HIGHLIGHT BOX ─── */
+.highlight-box {
+  background: rgba(0,229,200,0.06);
+  border: 1px solid rgba(0,229,200,0.2);
+  padding: 40px;
+  margin: 40px 0;
+}
+.highlight-box h4 {
+  font-family: var(--font-display);
+  font-size: 1rem; font-weight: 700;
+  color: var(--accent); margin-bottom: 12px;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-size: 0.75rem;
+}
+.highlight-box p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+
+/* ─── RESULT ROW ─── */
+.result-row {
+  display: flex; flex-wrap: wrap; gap: 0;
+  border: 1px solid var(--border);
+  margin: 32px 0;
+}
+.result-item {
+  flex: 1; min-width: 140px;
+  padding: 28px 24px;
+  border-right: 1px solid var(--border);
+  text-align: center;
+}
+.result-item:last-child { border-right: none; }
+.result-num {
+  font-family: var(--font-display);
+  font-size: 2rem; font-weight: 800;
+  color: var(--accent); line-height: 1; margin-bottom: 6px;
+}
+.result-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.05em; }
+
+/* ─── TWO-COL CONTENT ─── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.two-col.align-center { align-items: center; }
+.col-sticky { position: sticky; top: 100px; }
+
+/* ─── ABOUT TEAM ─── */
+.team-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 48px; }
+.team-card {
+  background: var(--off-black);
+  padding: 36px 32px;
+}
+.team-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem; font-weight: 700;
+  margin-bottom: 4px;
+}
+.team-role {
+  font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 16px;
+}
+.team-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+
+/* ─── ACCORDION ─── */
+.accordion-item {
+  border-bottom: 1px solid var(--border);
+}
+.accordion-trigger {
+  width: 100%; background: none; border: none;
+  color: var(--white); cursor: pointer;
+  padding: 24px 0;
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--font-display);
+  font-size: 1.05rem; font-weight: 600;
+  text-align: left;
+}
+.accordion-content {
+  max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+}
+.accordion-content.open { max-height: 300px; }
+.accordion-body {
+  padding: 0 0 24px;
+  font-size: 0.88rem; color: var(--muted); line-height: 1.75;
+}
+.acc-chevron { transition: transform 0.3s; font-size: 0.8rem; }
+.accordion-content.open + * .acc-chevron,
+.acc-chevron.open { transform: rotate(45deg); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  section { padding: 60px 24px; }
+  .page-hero { padding: 140px 24px 60px; }
+  nav { padding: 0 20px; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .two-col { grid-template-columns: 1fr; gap: 40px; }
+  .team-grid { grid-template-columns: 1fr 1fr; }
+  footer { padding: 48px 24px 24px; }
+  .cta-band { padding: 60px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a class="nav-logo" onclick="showPage('home')" href="#">en<span>.</span>pointe</a>
+  <ul class="nav-links">
+    <li>
+      <button>Industries <span class="chevron">▾</span></button>
+      <div class="dropdown">
+        <a onclick="showPage('media')">Media &amp; Entertainment</a>
+        <a onclick="showPage('retail')">Retail &amp; Logistics</a>
+        <a onclick="showPage('experiences')">Experiences &amp; Attractions</a>
+        <a onclick="showPage('ecommerce')">Ecommerce &amp; Publishing</a>
+      </div>
+    </li>
+    <li><a onclick="showPage('ai')">AI Transformation</a></li>
+    <li>
+      <button>Products <span class="chevron">▾</span></button>
+      <div class="dropdown">
+        <a onclick="showPage('productivity')">Productivity Tools</a>
+        <a onclick="showPage('rme')">Retail, Media &amp; Entertainment Tech</a>
+      </div>
+    </li>
+    <li><a onclick="showPage('about')">About Us</a></li>
+  </ul>
+  <a class="nav-cta" onclick="showPage('contact')">Contact Us ↗</a>
+</nav>
+
+<!-- ════════════════════════════════════════
+  HOME PAGE
+════════════════════════════════════════ -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-tag">Your Trusted Engineering Partner</div>
+    <h1>Engineering<br><em>Intelligence At Scale.</em></h1>
+    <p class="hero-sub">We build systems that bring intelligence into modern businesses — from AI transformation to enterprise-grade platforms.</p>
+    <a class="btn-primary" onclick="showPage('about')">Explore Our Work <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    <div class="scroll-hint"><div class="scroll-line"></div></div>
+  </div>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item"><span>◆</span> Cinépolis</div>
+      <div class="marquee-item"><span>◆</span> EMAAR</div>
+      <div class="marquee-item"><span>◆</span> Novo Cinemas</div>
+      <div class="marquee-item"><span>◆</span> Dharma Productions</div>
+      <div class="marquee-item"><span>◆</span> People Matters</div>
+      <div class="marquee-item"><span>◆</span> Star Cinemas</div>
+      <div class="marquee-item"><span>◆</span> Empire Cinemas</div>
+      <div class="marquee-item"><span>◆</span> Sarmix</div>
+      <div class="marquee-item"><span>◆</span> Pridel Logistics</div>
+      <div class="marquee-item"><span>◆</span> Slasher OTT</div>
+      <!-- repeat -->
+      <div class="marquee-item"><span>◆</span> Cinépolis</div>
+      <div class="marquee-item"><span>◆</span> EMAAR</div>
+      <div class="marquee-item"><span>◆</span> Novo Cinemas</div>
+      <div class="marquee-item"><span>◆</span> Dharma Productions</div>
+      <div class="marquee-item"><span>◆</span> People Matters</div>
+      <div class="marquee-item"><span>◆</span> Star Cinemas</div>
+    </div>
+  </div>
+
+  <section class="light big-text-section">
+    <div class="section-label dark-label">What We Do</div>
+    <p class="big-text">
+      Businesses run on a network of <strong>interconnected systems.</strong><br>
+      From ticketing and payments to venue operations and guest interactions,<br>
+      every part of the experience depends on <em>technology working together.</em><br>
+      <strong>We build the technology that makes this possible.</strong>
+    </p>
+  </section>
+
+  <section style="padding:0; background:var(--off-black);">
+    <div style="padding:80px 80px 0;">
+      <div class="section-label">Trusted by Visionaries</div>
+      <h2 class="display" style="margin-bottom:48px">Our Clients</h2>
+    </div>
+    <div class="logo-row" style="border-left:none;border-right:none;border-top:1px solid var(--border)">
+      <div class="logo-item">Cinépolis</div>
+      <div class="logo-item">Dharma</div>
+      <div class="logo-item">EMAAR</div>
+      <div class="logo-item">NMD</div>
+      <div class="logo-item">People Matters</div>
+      <div class="logo-item">Novo Cinemas</div>
+      <div class="logo-item">Star Cinemas</div>
+    </div>
+    <div style="padding:80px;">
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-num">30<span class="accent">M+</span></div>
+          <div class="stat-label">Tickets Sold<br>Across cinema &amp; experience platforms</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">3<span class="accent">K+</span></div>
+          <div class="stat-label">Screens<br>Powered by our systems</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">10<span class="accent">M+</span></div>
+          <div class="stat-label">Daily Platform Interactions<br>Active platform deployments</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">40<span class="accent">+</span></div>
+          <div class="stat-label">Years of Expertise<br>Founding media technology</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="black">
+    <div class="section-label">Our Impact</div>
+    <div class="two-col" style="gap:60px; margin-top:40px;">
+      <div>
+        <h2 class="display">A snapshot of the work<br><em>we've delivered so far.</em></h2>
+        <p class="lead" style="margin-top:20px">Enpointe's bespoke solutions are built at the intersection of deep engineering expertise, domain understanding, and AI-first thinking — partnering with enterprises across media, retail, logistics, and emerging digital ecosystems.</p>
+        <div style="margin-top:36px; display:flex; gap:16px; flex-wrap:wrap;">
+          <a class="btn-primary" onclick="showPage('about')">About Us</a>
+          <a class="btn-outline" onclick="showPage('media')">Our Work</a>
+        </div>
+      </div>
+      <div class="grid-2" style="gap:1px; background:var(--border); border:1px solid var(--border);">
+        <div style="background:var(--off-black);padding:36px">
+          <div class="section-label" style="margin-bottom:8px">Build</div>
+          <h4 style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:8px">End-to-End Product Development</h4>
+          <p style="font-size:0.82rem;color:var(--muted)">From idea to production — full product engineering lifecycle.</p>
+        </div>
+        <div style="background:var(--off-black);padding:36px">
+          <div class="section-label" style="margin-bottom:8px">Transform</div>
+          <h4 style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:8px">Legacy to AI-Native</h4>
+          <p style="font-size:0.82rem;color:var(--muted)">Modernize existing systems with AI and cloud-native architecture.</p>
+        </div>
+        <div style="background:var(--off-black);padding:36px">
+          <div class="section-label" style="margin-bottom:8px">Augment</div>
+          <h4 style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:8px">Embedded Engineering Teams</h4>
+          <p style="font-size:0.82rem;color:var(--muted)">Scale your internal capability with our specialist engineers.</p>
+        </div>
+        <div style="background:var(--off-black);padding:36px">
+          <div class="section-label" style="margin-bottom:8px">Scale</div>
+          <h4 style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:8px">Ongoing Optimization</h4>
+          <p style="font-size:0.82rem;color:var(--muted)">Continuous improvement, support, and platform evolution.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:80px 80px 0;background:var(--off-black);">
+    <div class="section-label">Our Techstack</div>
+    <p class="lead">Our AI automation plugs into your stack to create a unified, intelligent workflow.</p>
+    <div class="tech-grid" style="margin-top:48px">
+      <div class="tech-item"><div class="tech-icon">⚛</div>React</div>
+      <div class="tech-item"><div class="tech-icon">🐍</div>Python</div>
+      <div class="tech-item"><div class="tech-icon">☁</div>AWS</div>
+      <div class="tech-item"><div class="tech-icon">🔵</div>Flutter</div>
+      <div class="tech-item"><div class="tech-icon">🤖</div>LLMs</div>
+      <div class="tech-item"><div class="tech-icon">🛢</div>PostgreSQL</div>
+      <div class="tech-item"><div class="tech-icon">⚡</div>Node.js</div>
+      <div class="tech-item"><div class="tech-icon">🔷</div>Azure</div>
+      <div class="tech-item"><div class="tech-icon">🐳</div>Docker</div>
+      <div class="tech-item"><div class="tech-icon">🔗</div>Kubernetes</div>
+    </div>
+  </section>
+
+  <div class="cta-band" style="margin-top:100px;">
+    <h2>Let's make something<br><em style="font-style:italic;color:var(--accent)">great together.</em></h2>
+    <p>Let us know what challenges you are trying to solve so we can help.</p>
+    <div class="cta-circle" onclick="showPage('contact')">→</div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">en<span>.</span>pointe</div>
+        <p class="footer-desc">Advanced software and product development company, creating enterprise-grade AI and technology solutions.</p>
+        <div class="footer-social">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-nav-title">Navigation</div>
+        <ul class="footer-nav-links">
+          <li><a onclick="showPage('home')">Home</a></li>
+          <li><a onclick="showPage('about')">About Us</a></li>
+          <li><a onclick="showPage('ai')">AI Transformation</a></li>
+          <li><a onclick="showPage('productivity')">Products</a></li>
+          <li><a onclick="showPage('contact')">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-nav-title">Industries</div>
+        <ul class="footer-nav-links">
+          <li><a onclick="showPage('media')">Media &amp; Entertainment</a></li>
+          <li><a onclick="showPage('retail')">Retail &amp; Logistics</a></li>
+          <li><a onclick="showPage('experiences')">Experiences &amp; Attractions</a></li>
+          <li><a onclick="showPage('ecommerce')">Ecommerce &amp; Publishing</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-nav-title">Offices</div>
+        <div class="footer-offices">
+          <div>
+            <div class="footer-office-name">UAE</div>
+            <div class="footer-office-addr">3rd Floor, Office 307, Block 6, Al Hamsa Building, Al Karama, Dubai, UAE</div>
+          </div>
+          <div>
+            <div class="footer-office-name">India</div>
+            <div class="footer-office-addr">1/29, Vishal Mall, New Link Rd Dahisar, Andheri West, Mumbai, Maharashtra 400102</div>
+          </div>
+          <div>
+            <div class="footer-office-name">USA</div>
+            <div class="footer-office-addr">Sunset Gower Studios 1438 N. Gower Street Box #26, Los Angeles, CA 90028</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Enpointe Co.</div>
+      <div class="footer-email">info@enpointe.io</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ════════════════════════════════════════
+  MEDIA & ENTERTAINMENT PAGE
+════════════════════════════════════════ -->
+<div id="page-media" class="page">
+  <div class="page-hero">
+    <div class="eyebrow">Industries / Media &amp; Entertainment</div>
+    <h1>MEDIA &amp;<br>ENTERTAINMENT</h1>
+    <p>Transforming cinema chains, OTT platforms, and production ecosystems with end-to-end digital engineering and AI-powered experiences.</p>
+  </div>
+
+  <section class="black">
+    <div class="section-label">Our Approach</div>
+    <div class="two-col align-center">
+      <div>
+        <h2 class="display">Where cinema meets <em>intelligent engineering.</em></h2>
+        <p class="lead" style="margin-top:16px">From fragmented ticketing systems to unified digital ecosystems, we've spent 30+ years shaping how cinema and entertainment businesses operate at scale — combining cloud architecture, mobile-first design, and AI to drive measurable revenue growth.</p>
+      </div>
+      <div class="grid-2" style="gap:16px">
+        <div class="card"><div class="card-icon">🎬</div><h4>Cinema Tech</h4><p>End-to-end ticketing, POS, F&amp;B and kiosk platforms for cinema operators.</p></div>
+        <div class="card"><div class="card-icon">📱</div><h4>Mobile-First</h4><p>Native apps, progressive web apps and seamless digital journeys.</p></div>
+        <div class="card"><div class="card-icon">📡</div><h4>OTT Streaming</h4><p>Multi-bitrate streaming with integrated ad engines and subscription management.</p></div>
+        <div class="card"><div class="card-icon">🤖</div><h4>AI Personalization</h4><p>Dynamic pricing, intelligent upselling, and conversational booking experiences.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cinépolis Case Study -->
+  <section style="background:var(--off-black)">
+    <div class="section-label">Case Study</div>
+    <div class="two-col" style="gap:60px; margin-top:40px;">
+      <div class="col-sticky">
+        <div class="case-client-tag">World's 4th Largest Cinema Chain</div>
+        <h2 class="display">Cinépolis</h2>
+        <p class="lead" style="margin-top:16px">Cinépolis faced significant operational and customer experience hurdles across its vast network in India and the GCC — from fragmented ticketing to static pricing.</p>
+        <div class="result-row">
+          <div class="result-item"><div class="result-num">1M+</div><div class="result-label">App Downloads in Year 1</div></div>
+          <div class="result-item"><div class="result-num">15–20%</div><div class="result-label">F&amp;B Revenue Uplift</div></div>
+        </div>
+        <div class="result-row">
+          <div class="result-item"><div class="result-num">1000+</div><div class="result-label">Repeat Visit Improvement</div></div>
+          <div class="result-item"><div class="result-num">↑</div><div class="result-label">Incremental Revenue via Dynamic Pricing</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="highlight-box">
+          <h4>The Challenge</h4>
+          <p>Fragmented ticketing systems across regions, inconsistent customer journeys, static pricing unable to respond to real-time demand, disconnected F&amp;B flows limiting upsell revenue, and high reliance on physical box offices causing queues.</p>
+        </div>
+        <h3 class="display" style="margin-top:32px">Our Solution</h3>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:12px;line-height:1.7">We engineered a comprehensive, bespoke digital ecosystem designed to streamline operations, enhance customer experience, and drive revenue growth across all Cinépolis touchpoints.</p>
+        <div class="process-list" style="margin-top:28px">
+          <div class="process-step"><div class="step-num">01</div><div class="step-content"><h4>Unified Digital Platform</h4><p>Single platform across web, mobile, kiosk, and POS with consistent UX.</p></div></div>
+          <div class="process-step"><div class="step-num">02</div><div class="step-content"><h4>Dynamic Pricing Engine</h4><p>Real-time demand-responsive pricing across all formats and locations.</p></div></div>
+          <div class="process-step"><div class="step-num">03</div><div class="step-content"><h4>Integrated F&amp;B Flows</h4><p>Seamless concession ordering woven into the digital booking journey.</p></div></div>
+          <div class="process-step"><div class="step-num">04</div><div class="step-content"><h4>Loyalty &amp; CRM</h4><p>AI-powered loyalty program driving repeat visits and personalized engagement.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Star Cinemas Case Study -->
+  <section class="black">
+    <div class="section-label">Case Study</div>
+    <div class="two-col" style="gap:60px;margin-top:40px;">
+      <div class="col-sticky">
+        <div class="case-client-tag">14 Locations Across UAE</div>
+        <h2 class="display">Star Cinemas</h2>
+        <p class="lead" style="margin-top:16px">A leading cinema chain with 14 locations across the UAE, facing outdated software and limited digital presence.</p>
+        <div class="result-row">
+          <div class="result-item"><div class="result-num">15K+</div><div class="result-label">Daily Digital Transactions</div></div>
+          <div class="result-item"><div class="result-num">20–60%</div><div class="result-label">Increase in Online Share</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="highlight-box"><h4>The Challenge</h4><p>Outdated and fragmented cinema software across 14 UAE locations, inefficient operations, limited digital presence, manual ticketing &amp; concession sales, and weak customer engagement.</p></div>
+        <div class="process-list" style="margin-top:28px">
+          <div class="process-step"><div class="step-num">01</div><div class="step-content"><h4>Platform Migration</h4><p>Migrated legacy systems to a scalable, cloud-native Nuvio platform.</p></div></div>
+          <div class="process-step"><div class="step-num">02</div><div class="step-content"><h4>Digital Channel Unification</h4><p>Unified website, mobile app, and kiosks into a single customer journey.</p></div></div>
+          <div class="process-step"><div class="step-num">03</div><div class="step-content"><h4>Ticket Express &amp; F&amp;B Express</h4><p>Faster ticketing and concession ordering with reduced wait times.</p></div></div>
+          <div class="process-step"><div class="step-num">04</div><div class="step-content"><h4>Arzen Digital Signage</h4><p>Centralized signage for promotions, trailers, and in-cinema engagement.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Empire Cinemas Case Study -->
+  <section style="background:var(--off-black)">
+    <div class="section-label">Case Study</div>
+    <div class="two-col" style="gap:60px;margin-top:40px;">
+      <div class="col-sticky">
+        <div class="case-client-tag">Kingdom of Saudi Arabia</div>
+        <h2 class="display">Empire Cinemas KSA</h2>
+        <p class="lead" style="margin-top:16px">A leading KSA cinema chain modernizing its digital infrastructure to combat legacy limitations and low online engagement.</p>
+        <div class="result-row">
+          <div class="result-item"><div class="result-num">100K+</div><div class="result-label">App Downloads</div></div>
+          <div class="result-item"><div class="result-num">20K+</div><div class="result-label">Daily Digital Transactions</div></div>
+        </div>
+        <div class="result-row">
+          <div class="result-item"><div class="result-num">40%</div><div class="result-label">Online Share Increase</div></div>
+          <div class="result-item"><div class="result-num">0.01%</div><div class="result-label">Ticketing Failure Rate</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="highlight-box"><h4>The Challenge</h4><p>Legacy client-server cinema software limiting scalability, operational inefficiencies, low online engagement, high counter dependency, and need for a cloud-first resilient architecture.</p></div>
+        <div class="process-list" style="margin-top:28px">
+          <div class="process-step"><div class="step-num">01</div><div class="step-content"><h4>Cloud-Based Cinema Architecture</h4><p>Migrated legacy systems to a scalable, cloud-native platform.</p></div></div>
+          <div class="process-step"><div class="step-num">02</div><div class="step-content"><h4>Digital Asset Revamp</h4><p>Rebuilt website, mobile app, and kiosks for seamless UX.</p></div></div>
+          <div class="process-step"><div class="step-num">03</div><div class="step-content"><h4>Nuvio Integration</h4><p>Unified ticketing on a modern cloud cinema platform, reducing TCO.</p></div></div>
+          <div class="process-step"><div class="step-num">04</div><div class="step-content"><h4>Loyalty CRM System</h4><p>Built a custom CRM to personalize engagement and drive repeat visits.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <h2>Ready to transform your<br><em style="color:var(--accent)">entertainment business?</em></h2>
+    <p>Let us know what challenges you are facing so we can help.</p>
+    <div class="cta-circle" onclick="showPage('contact')">→</div>
+  </div>
+  <footer>
+    <div class="footer-bottom" style="border-top:1px solid var(--border);padding:24px 0 0;">
+      <div class="footer-copy">© 2025 Enpointe Co.</div>
+      <div class="footer-email">info@enpointe.io</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ════════════════════════════════════════
+  RETAIL & LOGISTICS PAGE
+════════════════════════════════════════ -->
+<div id="page-retail" class="page">
+  <div class="page-hero">
+    <div class="eyebrow">Industries / Retail &amp; Logistics</div>
+    <h1>RETAIL &amp;<br>LOGISTICS</h1>
+    <p>AI-driven operational ecosystems that eliminate manual inefficiency, optimize supply chains, and create seamless commerce experiences.</p>
+  </div>
+
+  <section class="black">
+    <div class="section-label">Capability Overview</div>
+    <div class="two-col align-center">
+      <div>
+        <h2 class="display">From warehouses to <em>digital storefronts.</em></h2>
+        <p class="lead" style="margin-top:16px">We apply AI and intelligent automation across the full logistics and retail stack — from ERP-grade operational ecosystems to conversational commerce platforms that drive confident purchase decisions.</p>
+      </div>
+      <div class="grid-2" style="gap:16px">
+        <div class="card"><div class="card-icon">🏭</div><h4>Operations AI</h4><p>Predictive procurement, automated dispatch, and quality control systems.</p></div>
+        <div class="card"><div class="card-icon">📦</div><h4>Supply Chain ERP</h4><p>Custom ERP systems optimizing end-to-end logistics workflows.</p></div>
+        <div class="card"><div class="card-icon">🛒</div><h4>Commerce Intelligence</h4><p>AI shopping assistants driving confident purchase decisions.</p></div>
+        <div class="card"><div class="card-icon">🧾</div><h4>Invoice Automation</h4><p>AI-powered invoice processing from receipt to accounting integration.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sarmix Case Study -->
+  <section style="background:var(--off-black)">
+    <div class="section-label">Case Study</div>
+    <div class="two-col" style="gap:60px;margin-top:40px;">
+      <div class="col-sticky">
+        <div class="case-client-tag">Industrial Operations</div>
+        <h2 class="display">Sarmix</h2>
+        <p class="lead" style="margin-top:16px">Sarmix faced significant operational risk, as manual workflows across all core processes created pervasive inefficiencies and human error.</p>
+        <div class="result-row">
+          <div class="result-item"><div class="result-num">23%</div><div class="result-label">Error Reduction</div></div>
+          <div class="result-item"><div class="result-num">37%</div><div class="result-label">Operational Cost Savings</div></div>
+        </div>
+        <div class="result-row">
+          <div class="result-item"><div class="result-num">30%</div><div class="result-label">Throughput Increase</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="highlight-box"><h4>The Challenge</h4><p>Substantial inconsistencies across planning and dispatch, lack of reactive quality management resulting in high correction costs, strained vendor relationships due to manual invoicing errors, and labor-intensive yard and fleet operations.</p></div>
+        <h3 class="display" style="margin-top:32px">Our Solution: AI Operational Ecosystem</h3>
+        <p style="color:var(--muted);font-size:0.9rem;margin:12px 0 28px;line-height:1.7">We replaced isolated tools with an integrated ecosystem that leverages AI for predictive quality control and automated gate management.</p>
+        <div class="process-list">
+          <div class="process-step"><div class="step-num">01</div><div class="step-content"><h4>Predictive Procurement</h4><p>AI-driven demand forecasting reducing overstock and shortages.</p></div></div>
+          <div class="process-step"><div class="step-num">02</div><div class="step-content"><h4>Automated Quality Control</h4><p>Real-time defect detection replacing manual inspection workflows.</p></div></div>
+          <div class="process-step"><div class="step-num">03</div><div class="step-content"><h4>Intelligent Dispatch</h4><p>AI-optimized fleet routing and yard management reducing idle time.</p></div></div>
+          <div class="process-step"><div class="step-num">04</div><div class="step-content"><h4>Automated Invoicing</h4><p>Eliminated manual invoicing errors, improving vendor relationships.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pridel Logistics Case Study -->
+  <section class="black">
+    <div class="section-label">Case Study</div>
+    <div class="two-col" style="gap:60px;margin-top:40px;">
+      <div class="col-sticky">
+        <div class="case-client-tag">Logistics & Invoice Processing</div>
+        <h2 class="display">Pridel Logistics</h2>
+        <p class="lead" style="margin-top:16px">Pridel faced significant operational hurdles, manually processing over 500 daily invoices, leading to errors and delays across their logistics operation.</p>
+        <div class="result-row">
+          <div class="result-item"><div class="result-num">50%</div><div class="result-label">Extraction Accuracy Increase</div></div>
+          <div class="result-item"><div class="result-num">40%</div><div class="result-label">Cost Savings</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="highlight-box"><h4>The Challenge</h4><p>Manual email and invoice processing, high error rates and discrepancies, slow payment cycles impacting cash flow, and lack of a unified approval workflow across the organization.</p></div>
+        <div class="process-list" style="margin-top:28px">
+          <div class="process-step"><div class="step-num">01</div><div class="step-content"><h4>Automated Invoice Intake</h4><p>AI extraction from emails and PDFs — near-zero manual data entry.</p></div></div>
+          <div class="process-step"><div class="step-num">02</div><div class="step-content"><h4>Unified Approval Workflow</h4><p>Digital approval chain with custom templates for commercials.</p></div></div>
+          <div class="process-step"><div class="step-num">03</div><div class="step-content"><h4>Accounting Integration</h4><p>Seamless sync with existing accounting systems and ERP.</p></div></div>
+          <div class="process-step"><div class="step-num">04</div><div class="step-content"><h4>Reporting Dashboard</h4><p>Customizable cloud-hosted dashboard for full financial visibility.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <h2>Let's optimize your<br><em style="color:var(--accent)">operations with AI.</em></h2>
+    <p>Tell us about your operational challenges — we'll build the solution.</p>
+    <div class="cta-circle" onclick="showPage('contact')">→</div>
+  </div>
+  <footer><div class="footer-bottom" style="border-top:1px solid var(--border);padding:24px 0 0;"><div class="footer-copy">© 2025 Enpointe Co.</div><div class="footer-email">info@enpointe.io</div></div></footer>
+</div>
+
+<!-- ════════════════════════════════════════
+  EXPERIENCES & ATTRACTIONS PAGE
+════════════════════════════════════════ -->
+<div id="page-experiences" class="page">
+  <div class="page-hero">
+    <div class="eyebrow">Industries / Experiences &amp; Attractions</div>
+    <h1>EXPERIENCES &amp;<br>ATTRACTIONS</h1>
+    <p>Unified ticketing, loyalty, and venue management systems for world-class entertainment destinations and attractions.</p>
+  </div>
+
+  <section class="black">
+    <div class="section-label">What We Build</div>
+    <div class="grid-3" style="gap:24px;margin-top:48px">
+      <div class="card"><div class="card-icon">🎡</div><h4>Venue Management</h4><p>Centralised operational analytics, dynamic zones, bundles, and pricing for attractions of any scale.</p></div>
+      <div class="card"><div class="card-icon">🎟</div><h4>Unified Ticketing</h4><p>Cross-venue wallets, passes, and kiosks creating seamless guest access experiences.</p></div>
+      <div class="card"><div class="card-icon">🍔</div><h4>F&amp;B Integration</h4><p>Digital food ordering integrated with delivery platforms, boosting F&amp;B revenue and customer satisfaction.</p></div>
+      <div class="card"><div class="card-icon">💡</div><h4>AI Upselling</h4><p>Intelligent upsell recommendations at every touchpoint — digital and physical.</p></div>
+      <div class="card"><div class="card-icon">📊</div><h4>Analytics Dashboard</h4><p>Unified financial dashboards providing 360° view of all attractions performance.</p></div>
+      <div class="card"><div class="card-icon">🔒</div><h4>Security Compliance</h4><p>ISO 27001 and PCI DSS certified platforms aligned with enterprise security requirements.</p></div>
+    </div>
+  </section>
+
+  <!-- EMAAR Case Study -->
+  <section style="background:var(--off-black)">
+    <div class="section-label">Case Study</div>
+    <div class="two-col" style="gap:60px;margin-top:40px;">
+      <div class="col-sticky">
+        <div class="case-client-tag">Global Real Estate & Attractions Leader</div>
+        <h2 class="display">EMAAR</h2>
+        <p class="lead" style="margin-top:16px">Emaar faced significant operational complexity with multiple disconnected software systems and vendors creating inefficiency across its attractions portfolio.</p>
+        <div class="result-row">
+          <div class="result-item"><div class="result-num">100%</div><div class="result-label">Revenue Increase</div></div>
+          <div class="result-item"><div class="result-num">80%</div><div class="result-label">Avg Cart Value Increase</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="highlight-box"><h4>The Challenge</h4><p>No single view of business operations, limited insights for strategic decisions, inconsistent customer experiences across all Emaar entertainment and attractions properties.</p></div>
+        <h3 class="display" style="margin-top:32px">Our Solution: Unified Ticketing Ecosystem</h3>
+        <p style="color:var(--muted);font-size:0.9rem;margin:12px 0 28px;line-height:1.7">A comprehensive platform that streamlined Emaar's attractions operations, built to ISO 27001 and PCI DSS standards.</p>
+        <div class="grid-2" style="gap:16px;margin-top:28px">
+          <div class="card"><h4>AI-Powered Upselling</h4><p>Intelligent recommendations driving higher cart values across all touchpoints.</p></div>
+          <div class="card"><h4>Unified Finance Dashboard</h4><p>Single view of financial performance across all Emaar attractions.</p></div>
+          <div class="card"><h4>Unified Customer Data</h4><p>360° customer view with comprehensive behavioral intelligence.</p></div>
+          <div class="card"><h4>Intelligent Analytics</h4><p>Real-time operational dashboards enabling strategic decision-making.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Get Hayya Case Study -->
+  <section class="black">
+    <div class="section-label">Case Study</div>
+    <div class="two-col" style="gap:60px;margin-top:40px;">
+      <div class="col-sticky">
+        <div class="case-client-tag">GCC Entertainment Super App</div>
+        <h2 class="display">Get Hayya</h2>
+        <p class="lead" style="margin-top:16px">The GCC entertainment sector remained digitally fractured, forcing users across disconnected platforms and preventing venues from capturing cross-sector loyalty or shared data.</p>
+        <div class="tags">
+          <span class="tag">Cinemas</span>
+          <span class="tag">Events</span>
+          <span class="tag">Attractions</span>
+          <span class="tag">Dining</span>
+          <span class="tag">Super App</span>
+        </div>
+      </div>
+      <div>
+        <div class="highlight-box"><h4>The Challenge</h4><p>Underutilized screens &amp; venue capacity, rising supply without demand aggregation, and fragmented booking journeys split across multiple disconnected platforms.</p></div>
+        <h3 class="display" style="margin-top:32px">Our Solution</h3>
+        <p style="color:var(--muted);font-size:0.9rem;margin:12px 0 28px;line-height:1.7">Get Hayya bridges the digital gap by consolidating cinemas, events, attractions, and dining into a mobile-first super app that unifies the entire consumer journey — providing venues with behavioral data and cross-selling tools needed to maximize seat utilization and long-term customer value.</p>
+        <div class="process-list">
+          <div class="process-step"><div class="step-num">01</div><div class="step-content"><h4>Real-time Seat Selection</h4><p>Cross-venue seat availability and AI-enabled dynamic pricing engine.</p></div></div>
+          <div class="process-step"><div class="step-num">02</div><div class="step-content"><h4>Cross-Venue Loyalty</h4><p>Unified loyalty and offers working across all connected venues.</p></div></div>
+          <div class="process-step"><div class="step-num">03</div><div class="step-content"><h4>Dining &amp; F&amp;B Integration</h4><p>Seamless dining ordering and add-on booking within the super app.</p></div></div>
+          <div class="process-step"><div class="step-num">04</div><div class="step-content"><h4>Enterprise-grade CMS</h4><p>Operator control panel for content, pricing, and offer management.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ordonex Case Study -->
+  <section style="background:var(--off-black)">
+    <div class="section-label">Case Study</div>
+    <div class="two-col" style="gap:60px;margin-top:40px;">
+      <div class="col-sticky">
+        <div class="case-client-tag">Cinema F&B Digital Ordering</div>
+        <h2 class="display">Ordonex</h2>
+        <p class="lead" style="margin-top:16px">Despite high demand, cinema concessions remained one of the region's least digitized F&amp;B categories, preventing customers from ordering through standard delivery channels.</p>
+        <div class="result-row">
+          <div class="result-item"><div class="result-num">25%</div><div class="result-label">F&amp;B Revenue Increase</div></div>
+          <div class="result-item"><div class="result-num">38%</div><div class="result-label">Improved Customer Ratings</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="highlight-box"><h4>The Challenge</h4><p>Non-standard POS workflows and complex combo structures prevented cinema concession menus from being available through delivery platforms.</p></div>
+        <div class="process-list" style="margin-top:28px">
+          <div class="process-step"><div class="step-num">01</div><div class="step-content"><h4>Delivery Platform Integration</h4><p>Real-time menu and inventory sync with major delivery partners.</p></div></div>
+          <div class="process-step"><div class="step-num">02</div><div class="step-content"><h4>Multi-partner Compatibility</h4><p>Compatible with Vista POS and multiple delivery ecosystems.</p></div></div>
+          <div class="process-step"><div class="step-num">03</div><div class="step-content"><h4>Multilingual Support</h4><p>Full Arabic and English language support across the platform.</p></div></div>
+          <div class="process-step"><div class="step-num">04</div><div class="step-content"><h4>CMS Operations Dashboard</h4><p>Detailed dashboard for operations, reporting, and configuration.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <h2>Build the future of<br><em style="color:var(--accent)">guest experiences.</em></h2>
+    <p>Let's talk about your venue's digital transformation.</p>
+    <div class="cta-circle" onclick="showPage('contact')">→</div>
+  </div>
+  <footer><div class="footer-bottom" style="border-top:1px solid var(--border);padding:24px 0 0;"><div class="footer-copy">© 2025 Enpointe Co.</div><div class="footer-email">info@enpointe.io</div></div></footer>
+</div>
+
+<!-- ════════════════════════════════════════
+  ECOMMERCE & PUBLISHING PAGE
+════════════════════════════════════════ -->
+<div id="page-ecommerce" class="page">
+  <div class="page-hero">
+    <div class="eyebrow">Industries / Ecommerce &amp; Publishing</div>
+    <h1>ECOMMERCE &amp;<br>PUBLISHING</h1>
+    <p>Unified CMS, CRM, and AI-native editorial platforms that power intelligent content operations and drive digital commerce at scale.</p>
+  </div>
+
+  <section class="black">
+    <div class="section-label">What We Build</div>
+    <div class="grid-3" style="gap:24px;margin-top:48px">
+      <div class="card"><div class="card-icon">✍</div><h4>AI-Native CMS</h4><p>Centralized content, workflows, SEO optimization, and AI-assisted publishing for editorial teams.</p></div>
+      <div class="card"><div class="card-icon">🎯</div><h4>CRM &amp; Lifecycle Marketing</h4><p>Lead scoring, segmentation, engagement tracking, and omnichannel lifecycle automation.</p></div>
+      <div class="card"><div class="card-icon">📈</div><h4>Analytics &amp; Intelligence</h4><p>Unified dashboards for behavior, funnels, and campaign performance across all channels.</p></div>
+      <div class="card"><div class="card-icon">🎟</div><h4>Events Platform</h4><p>End-to-end event registration, management, and engagement for digital and in-person events.</p></div>
+      <div class="card"><div class="card-icon">🛍</div><h4>Conversational Commerce</h4><p>AI shopping assistant helping customers make confident purchase decisions.</p></div>
+      <div class="card"><div class="card-icon">⚖</div><h4>Rights Management</h4><p>Secure, cloud-based platform for rights, contracts, royalties, and billing.</p></div>
+    </div>
+  </section>
+
+  <!-- People Matters Case Study -->
+  <section style="background:var(--off-black)">
+    <div class="section-label">Case Study</div>
+    <div class="two-col" style="gap:60px;margin-top:40px;">
+      <div class="col-sticky">
+        <div class="case-client-tag">B2B Publishing & HR Media</div>
+        <h2 class="display">People Matters</h2>
+        <p class="lead" style="margin-top:16px">People Matters faced a complex and fragmented digital ecosystem spanning various content, events, marketing, and CRM systems — limiting scalability and hindering user experience.</p>
+        <div class="result-row">
+          <div class="result-item"><div class="result-num">140%</div><div class="result-label">Page Traffic Increase</div></div>
+          <div class="result-item"><div class="result-num">60%</div><div class="result-label">Editorial Efficiency Increase</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="highlight-box"><h4>The Challenge</h4><p>No unified CMS or content workflow, fragmented events, marketing, and email systems, limited personalisation and segmented communication, and lack of centralised analytics.</p></div>
+        <h3 class="display" style="margin-top:32px">Our Solution: AI Native CMS + CRM</h3>
+        <p style="color:var(--muted);font-size:0.9rem;margin:12px 0 28px;line-height:1.7">We transformed People Matters' digital stack into a unified, AI-driven platform integrating content, events, marketing automation, CRM, analytics, and a fully revamped website.</p>
+        <div class="grid-2" style="gap:16px;margin-top:28px">
+          <div class="card"><h4>Unified CMS &amp; Website Revamp</h4><p>Centralized content, workflows, SEO, and AI-assisted publishing.</p></div>
+          <div class="card"><h4>AI Native CRM</h4><p>Lead scoring, segmentation, and engagement tracking across all regions.</p></div>
+          <div class="card"><h4>360° Analytics Dashboard</h4><p>Unified dashboards for behaviour, funnels, and campaign performance.</p></div>
+          <div class="card"><h4>Events Integration</h4><p>End-to-end event management woven into the editorial workflow.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dharma Productions -->
+  <section class="black">
+    <div class="section-label">Case Study</div>
+    <div class="two-col" style="gap:60px;margin-top:40px;">
+      <div class="col-sticky">
+        <div class="case-client-tag">Bollywood Production House</div>
+        <h2 class="display">Dharma Productions</h2>
+        <p class="lead" style="margin-top:16px">Comprehensive digital transformation for one of India's most celebrated film production houses — website, mobile application, and audience engagement platform.</p>
+        <div class="tags">
+          <span class="tag">Website</span>
+          <span class="tag">Mobile App</span>
+          <span class="tag">Fan Engagement</span>
+          <span class="tag">CMS</span>
+        </div>
+      </div>
+      <div>
+        <div class="highlight-box"><h4>The Transformation</h4><p>Unified digital experience platform integrating content management, fan engagement, and a multidomain CMS with integrated CRM for streamlined communication across all Dharma touchpoints.</p></div>
+        <div class="process-list" style="margin-top:28px">
+          <div class="process-step"><div class="step-num">01</div><div class="step-content"><h4>Unified Digital Experience</h4><p>Web and mobile platform creating a cohesive brand and fan experience.</p></div></div>
+          <div class="process-step"><div class="step-num">02</div><div class="step-content"><h4>Multidomain CMS</h4><p>Streamlined content publishing across all Dharma properties and brands.</p></div></div>
+          <div class="process-step"><div class="step-num">03</div><div class="step-content"><h4>CRM Integration</h4><p>Audience segmentation and engagement automation for film launches.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <h2>Power your content<br><em style="color:var(--accent)">and commerce operations.</em></h2>
+    <p>Let's build an intelligent publishing ecosystem for your brand.</p>
+    <div class="cta-circle" onclick="showPage('contact')">→</div>
+  </div>
+  <footer><div class="footer-bottom" style="border-top:1px solid var(--border);padding:24px 0 0;"><div class="footer-copy">© 2025 Enpointe Co.</div><div class="footer-email">info@enpointe.io</div></div></footer>
+</div>
+
+<!-- ════════════════════════════════════════
+  AI TRANSFORMATION PAGE
+════════════════════════════════════════ -->
+<div id="page-ai" class="page">
+  <div class="page-hero" style="background:linear-gradient(135deg, var(--black) 0%, #0a1a0e 100%)">
+    <div class="eyebrow">AI Transformation</div>
+    <h1>INTELLIGENCE<br>BY DESIGN.</h1>
+    <p>We guide organisations through their AI transformation journey — from strategy and roadmaps to agentic systems and enterprise deployments that deliver real ROI.</p>
+  </div>
+
+  <section style="background:var(--off-black)">
+    <div class="section-label">Our AI Approach</div>
+    <div class="two-col align-center">
+      <div>
+        <h2 class="display">AI + Engineering.<br><em>Not just consulting.</em></h2>
+        <p class="lead" style="margin-top:16px">Enpointe's AI transformation practice is built on real-world enterprise deployments across 20+ countries. We combine strategic AI roadmapping with full-stack engineering — ensuring every AI initiative translates to measurable business outcomes.</p>
+      </div>
+      <div class="process-list">
+        <div class="process-step"><div class="step-num">01</div><div class="step-content"><h4>Assess &amp; Strategize</h4><p>Map your business processes, identify high-impact AI opportunities, and build a practical roadmap.</p></div></div>
+        <div class="process-step"><div class="step-num">02</div><div class="step-content"><h4>Prototype &amp; Validate</h4><p>Build focused proof-of-concepts to validate AI value before full-scale deployment.</p></div></div>
+        <div class="process-step"><div class="step-num">03</div><div class="step-content"><h4>Engineer &amp; Deploy</h4><p>Full-stack AI engineering — LLMs, computer vision, NLP, and agentic workflows.</p></div></div>
+        <div class="process-step"><div class="step-num">04</div><div class="step-content"><h4>Scale &amp; Optimise</h4><p>Continuous improvement, model fine-tuning, and ROI measurement post-deployment.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="black">
+    <div class="section-label">AI Capabilities</div>
+    <h2 class="display" style="margin-bottom:48px">What we <em>engineer.</em></h2>
+    <div class="grid-3" style="gap:24px">
+      <div class="card"><div class="card-icon">💬</div><h4>Conversational AI</h4><p>AI chatbots and voice assistants integrated with enterprise systems for customer service, booking, and discovery.</p></div>
+      <div class="card"><div class="card-icon">🧠</div><h4>Enterprise LLM Deployment</h4><p>Private, secure LLM deployments — including offline-first capabilities for sensitive industries.</p></div>
+      <div class="card"><div class="card-icon">👁</div><h4>Computer Vision</h4><p>Video analytics, CCTV intelligence, footfall analysis, and occupancy pattern detection.</p></div>
+      <div class="card"><div class="card-icon">🔄</div><h4>Agentic Automation</h4><p>Multi-step AI agents handling complex workflows — procurement, QC, invoicing, and more.</p></div>
+      <div class="card"><div class="card-icon">📊</div><h4>Data Intelligence</h4><p>Conversational analytics platforms with natural language querying across your entire data estate.</p></div>
+      <div class="card"><div class="card-icon">🎨</div><h4>AI Content Engines</h4><p>Content regeneration, meme marketing automation, and AI-assisted editorial workflows.</p></div>
+    </div>
+  </section>
+
+  <!-- Archaea / Kantham Case Study -->
+  <section style="background:var(--off-black)">
+    <div class="section-label">Case Study — Enterprise AI</div>
+    <div class="two-col" style="gap:60px;margin-top:40px;">
+      <div class="col-sticky">
+        <div class="case-client-tag">Enterprise Developer Tools</div>
+        <h2 class="display">Archaea<br><span style="font-size:1.4rem;color:var(--muted)">(Kantham)</span></h2>
+        <p class="lead" style="margin-top:16px">Kantham found the modern developer ecosystem overly complex, leading to fragmented tools and workflow inefficiencies — with heavy dependence on internet-based AI tools.</p>
+        <div class="result-row">
+          <div class="result-item"><div class="result-num">150%</div><div class="result-label">Developer Productivity Increase</div></div>
+          <div class="result-item"><div class="result-num">90%</div><div class="result-label">Code Quality &amp; Security Improvement</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="highlight-box"><h4>The Challenge</h4><p>Fragmented developer tools, heavy dependence on internet-based AI, high time spent on manual debugging, and inconsistent code quality and security checks across teams.</p></div>
+        <h3 class="display" style="margin-top:32px">Our Solution: Enterprise Offline AI Code Assistant</h3>
+        <p style="color:var(--muted);font-size:0.9rem;margin:12px 0 28px;line-height:1.7">A custom platform integrated with VSCode providing comprehensive AI-driven code assistance with robust offline capabilities.</p>
+        <div class="grid-2" style="gap:16px;margin-top:28px">
+          <div class="card"><h4>Code Intelligence (Offline First)</h4><p>Semantic search, contextual Q&A, and code explanations — without internet dependency.</p></div>
+          <div class="card"><h4>Automated Security &amp; Fixes</h4><p>AI-powered prioritized vulnerability findings and guided remediation.</p></div>
+          <div class="card"><h4>Modern Workflow &amp; Productivity</h4><p>Integrated Git workflows, AI-assisted code completion, and test generation within VS Code.</p></div>
+          <div class="card"><h4>Consistent Quality Gates</h4><p>Automated compliance with documentation standards across all code commits.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Novo Cinemas AI Chatbot -->
+  <section class="black">
+    <div class="section-label">Case Study — Conversational AI</div>
+    <div class="two-col" style="gap:60px;margin-top:40px;">
+      <div class="col-sticky">
+        <div class="case-client-tag">GCC Premium Cinema Chain</div>
+        <h2 class="display">Novo Cinemas AI Chatbot</h2>
+        <p class="lead" style="margin-top:16px">Novo Cinemas faced fragmented customer interactions across channels, leading to high drop-offs and inefficient support operations.</p>
+        <div class="result-row">
+          <div class="result-item"><div class="result-num">30%</div><div class="result-label">Increase in Booking Conversion</div></div>
+          <div class="result-item"><div class="result-num">45%</div><div class="result-label">Reduction in Support Load</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="highlight-box"><h4>The Challenge</h4><p>Manual handling of customer queries, high response times impacting booking conversions, limited personalization in movie discovery, and disconnected booking, support, and information systems.</p></div>
+        <h3 class="display" style="margin-top:32px">Conversational AI Booking Ecosystem</h3>
+        <p style="color:var(--muted);font-size:0.9rem;margin:12px 0 28px;line-height:1.7">An AI-powered chatbot unifying movie discovery, ticket booking, and customer support into a single conversational experience — integrated seamlessly with Novo's ecosystem.</p>
+        <div class="process-list">
+          <div class="process-step"><div class="step-num">01</div><div class="step-content"><h4>Conversational Discovery</h4><p>AI-driven movie recommendations based on preferences, history, and real-time availability.</p></div></div>
+          <div class="process-step"><div class="step-num">02</div><div class="step-content"><h4>End-to-End Booking Flow</h4><p>Seat selection, F&amp;B add-ons, and payment — all within the chat interface.</p></div></div>
+          <div class="process-step"><div class="step-num">03</div><div class="step-content"><h4>Automated Support</h4><p>Intelligent handling of FAQs, booking modifications, and refund requests.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Meldit / Youngun Case Study -->
+  <section style="background:var(--off-black)">
+    <div class="section-label">Case Study — AI Marketing</div>
+    <div class="two-col" style="gap:60px;margin-top:40px;">
+      <div class="col-sticky">
+        <div class="case-client-tag">Social Media & Meme Marketing</div>
+        <h2 class="display">Meldit AI</h2>
+        <p class="lead" style="margin-top:16px">The primary challenge was the lack of a consolidated system to manage meme marketing campaigns across scattered posts, vendors, and accounts.</p>
+        <div class="tags">
+          <span class="tag">Marketing Automation</span>
+          <span class="tag">AI Content</span>
+          <span class="tag">Vendor Management</span>
+        </div>
+      </div>
+      <div>
+        <div class="highlight-box"><h4>The Challenge</h4><p>Fragmented process making it difficult to manage scattered posts, track different vendors and accounts, and maintain a seamless campaign execution process — leading to poor campaign visibility and accountability.</p></div>
+        <div class="process-list" style="margin-top:28px">
+          <div class="process-step"><div class="step-num">01</div><div class="step-content"><h4>AI-Led Content Generation</h4><p>Automated meme creation and content adaptation for social formats.</p></div></div>
+          <div class="process-step"><div class="step-num">02</div><div class="step-content"><h4>Vendor &amp; Account Tracking</h4><p>Centralized dashboard for managing all publisher accounts and vendors.</p></div></div>
+          <div class="process-step"><div class="step-num">03</div><div class="step-content"><h4>Execution Workflow Integration</h4><p>End-to-end campaign execution pipeline with approval workflows and performance reporting.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <h2>Start your<br><em style="color:var(--accent)">AI transformation.</em></h2>
+    <p>We'll build the roadmap and engineer the future — together.</p>
+    <div class="cta-circle" onclick="showPage('contact')">→</div>
+  </div>
+  <footer><div class="footer-bottom" style="border-top:1px solid var(--border);padding:24px 0 0;"><div class="footer-copy">© 2025 Enpointe Co.</div><div class="footer-email">info@enpointe.io</div></div></footer>
+</div>
+
+<!-- ════════════════════════════════════════
+  PRODUCTIVITY TOOLS PAGE
+════════════════════════════════════════ -->
+<div id="page-productivity" class="page">
+  <div class="page-hero">
+    <div class="eyebrow">Products / Productivity Tools</div>
+    <h1>PRODUCTIVITY<br>WORKSPACE<br>TOOLS.</h1>
+    <p>From conversational data intelligence to AI meeting assistants — our productivity suite eliminates friction and surfaces what matters.</p>
+  </div>
+
+  <section class="black">
+    <div class="section-label">The Suite</div>
+    <h2 class="display" style="margin-bottom:16px">From internal productivity to<br><em>customer intelligence.</em></h2>
+    <p class="lead" style="margin-bottom:60px">Enpointe accelerates AI adoption through ready products and custom AI engineering — modular tools that slot into your existing workflow.</p>
+    <div class="grid-3" style="gap:24px">
+      <div class="product-card">
+        <div class="product-card-header">
+          <div class="product-tag">Data Intelligence</div>
+          <h3>AI Data Analyst</h3>
+          <p>Conversational data intelligence connected to multiple platforms for all cross-functional teams — ask questions in natural language, get instant insights.</p>
+        </div>
+        <div class="product-features">
+          <div class="product-feature"><div class="feature-dot"></div>Unified data layer connecting all business tools</div>
+          <div class="product-feature"><div class="feature-dot"></div>Real-time auto-generated dashboards and trends</div>
+          <div class="product-feature"><div class="feature-dot"></div>Natural language querying across all data sources</div>
+          <div class="product-feature"><div class="feature-dot"></div>For Ecommerce, Finance, SaaS, and Sales teams</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-header">
+          <div class="product-tag">Meeting Intelligence</div>
+          <h3>MeetMemo</h3>
+          <p>AI-powered meeting assistant that captures, summarizes, and organizes meeting content automatically across calls, video, audio, and chat.</p>
+        </div>
+        <div class="product-features">
+          <div class="product-feature"><div class="feature-dot"></div>Real-time transcription and summary generation</div>
+          <div class="product-feature"><div class="feature-dot"></div>Highlights, action items, and concern tracking</div>
+          <div class="product-feature"><div class="feature-dot"></div>Collaborative Knowledge Hub — Spaces &amp; Memo.ry AI</div>
+          <div class="product-feature"><div class="feature-dot"></div>Mobile, desktop, extensions, and hardware support</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-header">
+          <div class="product-tag">AI Chat Aggregator</div>
+          <h3>Polymind</h3>
+          <p>AI-powered workspace unifying multiple AI models — enabling individuals and teams to collaborate on shared chats, organize work into projects, and manage usage seamlessly.</p>
+        </div>
+        <div class="product-features">
+          <div class="product-feature"><div class="feature-dot"></div>Multiple AI models in one governed workspace</div>
+          <div class="product-feature"><div class="feature-dot"></div>Team collaboration on shared AI conversations</div>
+          <div class="product-feature"><div class="feature-dot"></div>Project organization and structured workflows</div>
+          <div class="product-feature"><div class="feature-dot"></div>Token control and usage management</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--off-black)">
+    <div class="section-label">Consumer Intelligence</div>
+    <h2 class="display" style="margin-bottom:48px">AI tools for <em>growth teams.</em></h2>
+    <div class="grid-3" style="gap:24px">
+      <div class="product-card">
+        <div class="product-card-header">
+          <div class="product-tag">Content Intelligence</div>
+          <h3>AI Content Regeneration Engine</h3>
+          <p>Repurposes long-form content into high-performing social formats for influencers and content teams — maximising reach across every platform.</p>
+        </div>
+        <div class="product-features">
+          <div class="product-feature"><div class="feature-dot"></div>Long-form to social format conversion</div>
+          <div class="product-feature"><div class="feature-dot"></div>Platform-optimized content variations</div>
+          <div class="product-feature"><div class="feature-dot"></div>Influencer and brand team workflows</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-header">
+          <div class="product-tag">Vision Intelligence</div>
+          <h3>Video &amp; CCTV Analytics</h3>
+          <p>Converts video and CCTV feeds into actionable insights — behaviour analysis, footfall tracking, occupancy patterns, and operational intelligence.</p>
+        </div>
+        <div class="product-features">
+          <div class="product-feature"><div class="feature-dot"></div>Real-time footfall and occupancy analytics</div>
+          <div class="product-feature"><div class="feature-dot"></div>Behavioural pattern detection</div>
+          <div class="product-feature"><div class="feature-dot"></div>For retail, venues, and public spaces</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-header">
+          <div class="product-tag">Conversational Commerce</div>
+          <h3>AI Shopping Assistant</h3>
+          <p>Helps customers make confident purchase decisions through intelligent, conversational guidance — reducing abandonment and boosting conversion.</p>
+        </div>
+        <div class="product-features">
+          <div class="product-feature"><div class="feature-dot"></div>Intelligent product recommendations</div>
+          <div class="product-feature"><div class="feature-dot"></div>Conversational decision-making support</div>
+          <div class="product-feature"><div class="feature-dot"></div>For Ecommerce and retail platforms</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="black">
+    <div class="section-label">Industry Applications</div>
+    <div class="two-col align-center">
+      <div>
+        <h2 class="display">Built for the <em>teams that drive your business.</em></h2>
+        <p class="lead" style="margin-top:16px">Our productivity suite is designed for the full enterprise — from product and engineering to finance, sales, and content teams.</p>
+      </div>
+      <div class="tags" style="align-content:start;gap:12px">
+        <span class="tag" style="padding:10px 18px">Ecommerce &amp; Retail</span>
+        <span class="tag" style="padding:10px 18px">Marketing &amp; Growth</span>
+        <span class="tag" style="padding:10px 18px">Finance &amp; Operations</span>
+        <span class="tag" style="padding:10px 18px">SaaS &amp; Product Teams</span>
+        <span class="tag" style="padding:10px 18px">Sales &amp; CRM</span>
+        <span class="tag" style="padding:10px 18px">Project Management</span>
+        <span class="tag" style="padding:10px 18px">Consulting &amp; Legal</span>
+        <span class="tag" style="padding:10px 18px">Human Resources</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <h2>Ready to supercharge<br><em style="color:var(--accent)">your team's productivity?</em></h2>
+    <p>Get a demo of any product in our AI workspace suite.</p>
+    <div class="cta-circle" onclick="showPage('contact')">→</div>
+  </div>
+  <footer><div class="footer-bottom" style="border-top:1px solid var(--border);padding:24px 0 0;"><div class="footer-copy">© 2025 Enpointe Co.</div><div class="footer-email">info@enpointe.io</div></div></footer>
+</div>
+
+<!-- ════════════════════════════════════════
+  RETAIL MEDIA & ENTERTAINMENT TECH PAGE
+════════════════════════════════════════ -->
+<div id="page-rme" class="page">
+  <div class="page-hero">
+    <div class="eyebrow">Products / Retail, Media &amp; Entertainment Tech</div>
+    <h1>PLATFORM<br>ECOSYSTEM.</h1>
+    <p>End-to-end products unifying fragmented customer journeys in experience-driven industries — from intelligent ticketing to OTT streaming and rights management.</p>
+  </div>
+
+  <section style="background:var(--off-black)">
+    <div class="section-label">Our Product Portfolio</div>
+    <h2 class="display" style="margin-bottom:16px">Built from real enterprise <em>deployments.</em></h2>
+    <p class="lead" style="margin-bottom:60px">Each product represents a repeatable, scalable solution to high-impact business problems — designed to integrate seamlessly into enterprise ecosystems, accelerating AI adoption while reducing time-to-value.</p>
+
+    <!-- NUVIO -->
+    <div class="product-card" style="margin-bottom:32px">
+      <div class="product-card-header">
+        <div class="product-tag">Cinema &amp; Experiences</div>
+        <h3>NUVIO</h3>
+        <p>End-to-end ticketing and experience platform built for cinemas, attractions, and large-scale venues — with 350K+ transactions processed monthly and 30+ years shaping cinema technology.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--border)">
+        <div style="padding:32px;border-right:1px solid var(--border)">
+          <div class="section-label" style="margin-bottom:12px">For Cinemas</div>
+          <div class="product-features" style="padding:0">
+            <div class="product-feature" style="padding:8px 0"><div class="feature-dot"></div>Multi-format film management (4D, IMAX, DMAX)</div>
+            <div class="product-feature" style="padding:8px 0"><div class="feature-dot"></div>Integrated ticketing, POS, and F&amp;B</div>
+            <div class="product-feature" style="padding:8px 0"><div class="feature-dot"></div>Distributor-grade reporting and analytics</div>
+            <div class="product-feature" style="padding:8px 0"><div class="feature-dot"></div>Real-time seat and occupancy intelligence</div>
+            <div class="product-feature" style="padding:8px 0"><div class="feature-dot"></div>TMS and digital signage integration</div>
+          </div>
+        </div>
+        <div style="padding:32px">
+          <div class="section-label" style="margin-bottom:12px">For Experiences</div>
+          <div class="product-features" style="padding:0">
+            <div class="product-feature" style="padding:8px 0"><div class="feature-dot"></div>Attractions, events, retail, hybrid venues</div>
+            <div class="product-feature" style="padding:8px 0"><div class="feature-dot"></div>Unified kiosks, wallets, and passes</div>
+            <div class="product-feature" style="padding:8px 0"><div class="feature-dot"></div>Dynamic zones, bundles, and pricing</div>
+            <div class="product-feature" style="padding:8px 0"><div class="feature-dot"></div>Centralised operational analytics</div>
+            <div class="product-feature" style="padding:8px 0"><div class="feature-dot"></div>ISO 27001 and PCI DSS certified</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats row for Nuvio -->
+    <div class="stats-row" style="margin-bottom:60px">
+      <div class="stat-item"><div class="stat-num">350<span class="accent">K+</span></div><div class="stat-label">Monthly Transactions Processed</div></div>
+      <div class="stat-item"><div class="stat-num">30<span class="accent">+</span></div><div class="stat-label">Years Shaping Cinema Technology</div></div>
+      <div class="stat-item"><div class="stat-num">6<span class="accent">+</span></div><div class="stat-label">Countries Deployed</div></div>
+      <div class="stat-item"><div class="stat-num">3<span class="accent">K+</span></div><div class="stat-label">Screens Powered</div></div>
+    </div>
+
+    <!-- More products grid -->
+    <div class="grid-3" style="gap:24px">
+      <div class="product-card">
+        <div class="product-card-header">
+          <div class="product-tag">Digital Signage</div>
+          <h3>Arzen</h3>
+          <p>Enterprise-grade digital signage platform centralizing content management and enabling seamless distribution across large screen networks.</p>
+        </div>
+        <div class="product-features">
+          <div class="product-feature"><div class="feature-dot"></div>Real-time display control &amp; intelligent CMS</div>
+          <div class="product-feature"><div class="feature-dot"></div>Modular content creation &amp; remote access</div>
+          <div class="product-feature"><div class="feature-dot"></div>Schedule creation and template designer</div>
+          <div class="product-feature"><div class="feature-dot"></div>Retail, Cinemas, Airports, Metro, Healthcare</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-header">
+          <div class="product-tag">OTT Streaming</div>
+          <h3>Streaming Platform</h3>
+          <p>State-of-the-art OTT streaming platform delivering video content with advanced monetization, cross-platform accessibility, and integrated ad engine.</p>
+        </div>
+        <div class="product-features">
+          <div class="product-feature"><div class="feature-dot"></div>Real-time multi-bitrate streaming</div>
+          <div class="product-feature"><div class="feature-dot"></div>Integrated ad engine &amp; subscription management</div>
+          <div class="product-feature"><div class="feature-dot"></div>Catalog management &amp; content discovery</div>
+          <div class="product-feature"><div class="feature-dot"></div>Media, Education, Corporate Training</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-header">
+          <div class="product-tag">Rights Management</div>
+          <h3>Rights Platform</h3>
+          <p>Switzerland-domiciled, secure, cloud-based platform simplifying rights, contracts, royalties, and billing for media and IP-intensive industries.</p>
+        </div>
+        <div class="product-features">
+          <div class="product-feature"><div class="feature-dot"></div>300+ rights secured via the platform</div>
+          <div class="product-feature"><div class="feature-dot"></div>Automated royalty calculations &amp; payments</div>
+          <div class="product-feature"><div class="feature-dot"></div>5+ production houses onboarded in Switzerland</div>
+          <div class="product-feature"><div class="feature-dot"></div>Film, TV, Music Publishing, Gaming</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-header">
+          <div class="product-tag">Expense Management</div>
+          <h3>Production Finance Platform</h3>
+          <p>Industry-agnostic, cloud-based platform and mobile app streamlining all enterprise and production-related financial workflows.</p>
+        </div>
+        <div class="product-features">
+          <div class="product-feature"><div class="feature-dot"></div>$150M+ movie production expenses processed</div>
+          <div class="product-feature"><div class="feature-dot"></div>Mobile-first approval system with digital docs</div>
+          <div class="product-feature"><div class="feature-dot"></div>Duplicate detection &amp; multi-project support</div>
+          <div class="product-feature"><div class="feature-dot"></div>Entertainment, IT, Consulting, Professional Services</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-header">
+          <div class="product-tag">CRM Partner</div>
+          <h3>Netcore Integration</h3>
+          <p>Full-stack CRM and customer engagement platform — a unified customer platform combining data, automation, and personalization, implemented end-to-end by Enpointe.</p>
+        </div>
+        <div class="product-features">
+          <div class="product-feature"><div class="feature-dot"></div>Customer Data Platform (CDP)</div>
+          <div class="product-feature"><div class="feature-dot"></div>Omnichannel: Email, SMS, WhatsApp, Web, App</div>
+          <div class="product-feature"><div class="feature-dot"></div>AI-led personalization &amp; lifecycle marketing</div>
+          <div class="product-feature"><div class="feature-dot"></div>Higher conversion, improved retention</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-header">
+          <div class="product-tag">Horror OTT</div>
+          <h3>Slasher</h3>
+          <p>First-ever horror OTT experience in the GCC — 100,000+ subscribers and growing daily, powered by Enpointe's streaming platform infrastructure.</p>
+        </div>
+        <div class="product-features">
+          <div class="product-feature"><div class="feature-dot"></div>100K+ subscribers &amp; growing</div>
+          <div class="product-feature"><div class="feature-dot"></div>New subscribers daily across GCC</div>
+          <div class="product-feature"><div class="feature-dot"></div>900+ horror titles in catalog</div>
+          <div class="product-feature"><div class="feature-dot"></div>First-mover in GCC horror streaming</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <h2>Ready to deploy our<br><em style="color:var(--accent)">platform ecosystem?</em></h2>
+    <p>Let's match the right product to your business challenge.</p>
+    <div class="cta-circle" onclick="showPage('contact')">→</div>
+  </div>
+  <footer><div class="footer-bottom" style="border-top:1px solid var(--border);padding:24px 0 0;"><div class="footer-copy">© 2025 Enpointe Co.</div><div class="footer-email">info@enpointe.io</div></div></footer>
+</div>
+
+<!-- ════════════════════════════════════════
+  ABOUT US PAGE
+════════════════════════════════════════ -->
+<div id="page-about" class="page">
+  <div class="page-hero">
+    <div class="eyebrow">About Us</div>
+    <h1>ENGINEERING<br>SINCE 2017.</h1>
+    <p>Advanced software and product development company creating enterprise-grade AI and technology solutions for the world's leading corporations.</p>
+  </div>
+
+  <section class="light big-text-section">
+    <div class="section-label dark-label">Who We Are</div>
+    <p class="big-text">
+      Enpointe is an advanced software and product development company, creating
+      <strong>enterprise-grade AI and technology solutions</strong> that solve practical challenges
+      faced by our corporate customers. Established in 2017, we serve as a trusted technology partner
+      to major corporations across <em>Asia, the Middle East, and the Americas.</em>
+    </p>
+  </section>
+
+  <section style="background:var(--off-black)">
+    <div class="stats-row">
+      <div class="stat-item"><div class="stat-num">20<span class="accent">+</span></div><div class="stat-label">Countries<br>Operating globally with local expertise</div></div>
+      <div class="stat-item"><div class="stat-num">30<span class="accent">+</span></div><div class="stat-label">Years Cumulative Expertise<br>UAE &amp; India</div></div>
+      <div class="stat-item"><div class="stat-num">150<span class="accent">+</span></div><div class="stat-label">Team Members<br>Diverse specialists in AI, engineering &amp; consulting</div></div>
+      <div class="stat-item"><div class="stat-num">2017</div><div class="stat-label">Founded<br>Building systems since day one</div></div>
+    </div>
+  </section>
+
+  <section class="black">
+    <div class="section-label">Why Enpointe?</div>
+    <div class="two-col align-center">
+      <div>
+        <h2 class="display">AI + Engineering.<br><em>Not just consulting.</em></h2>
+        <p class="lead" style="margin-top:16px">We are a long-term transformation partner — not a vendor. Our full-stack capabilities span product engineering, AI systems, infrastructure, and business transformation — all focused on delivering ROI you can rely on.</p>
+      </div>
+      <div class="process-list">
+        <div class="process-step"><div class="step-num">✓</div><div class="step-content"><h4>AI + Engineering (not just consulting)</h4><p>We build and ship, not just advise. Every engagement is anchored in working technology.</p></div></div>
+        <div class="process-step"><div class="step-num">✓</div><div class="step-content"><h4>Proven Enterprise Deployments</h4><p>Across 20+ countries, we've delivered for the largest cinema chains, attractions, and media companies in the world.</p></div></div>
+        <div class="process-step"><div class="step-num">✓</div><div class="step-content"><h4>Strong Focus on ROI</h4><p>Measurable outcomes are non-negotiable. Every engagement is designed to deliver quantifiable business impact.</p></div></div>
+        <div class="process-step"><div class="step-num">✓</div><div class="step-content"><h4>Full-Stack Capabilities</h4><p>Product → AI → Infra. One partner for the entire technology stack.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--off-black)">
+    <div class="section-label">Meet the Founders</div>
+    <h2 class="display" style="margin-bottom:48px">The team behind <em>the engineering.</em></h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-name">Sanath Shetty</div>
+        <div class="team-role">Co-Founder</div>
+        <p class="team-desc">Leading engineering excellence. Industry expertise in Enterprise Architecture, Platform Engineering, and Data &amp; Cloud Systems.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-name">Arshad Kazi</div>
+        <div class="team-role">Co-Founder</div>
+        <p class="team-desc">Business Operations and Client Partnerships. Industry expertise in Cinema, Retail, Publishing &amp; Private Equity.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-name">Julian Wheatland</div>
+        <div class="team-role">Co-Founder</div>
+        <p class="team-desc">Driving strategic vision and growth. Industry expertise in Venture &amp; Growth Capital, SaaS &amp; Technology Businesses, and Capital Strategy.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-name">Prabjyot Sudan</div>
+        <div class="team-role">Co-Founder</div>
+        <p class="team-desc">Leading Artificial Intelligence. Industry expertise in AI &amp; Machine Learning and Hardware Development.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="black">
+    <div class="section-label">Our Team</div>
+    <div class="two-col align-center">
+      <div>
+        <h2 class="display">150+ specialists<br><em>across every discipline.</em></h2>
+        <p class="lead" style="margin-top:16px">Our multi-disciplinary team brings together every capability needed to deliver, from initial strategy through to live production environments.</p>
+      </div>
+      <div class="grid-2" style="gap:12px">
+        <div style="padding:20px;border:1px solid var(--border);font-size:0.85rem;color:var(--muted)">🤖 AI Engineers</div>
+        <div style="padding:20px;border:1px solid var(--border);font-size:0.85rem;color:var(--muted)">🎨 UI/UX Designers</div>
+        <div style="padding:20px;border:1px solid var(--border);font-size:0.85rem;color:var(--muted)">💻 Full-stack Developers</div>
+        <div style="padding:20px;border:1px solid var(--border);font-size:0.85rem;color:var(--muted)">📱 Mobile Engineers</div>
+        <div style="padding:20px;border:1px solid var(--border);font-size:0.85rem;color:var(--muted)">📊 Data Scientists</div>
+        <div style="padding:20px;border:1px solid var(--border);font-size:0.85rem;color:var(--muted)">⚙ DevOps Engineers</div>
+        <div style="padding:20px;border:1px solid var(--border);font-size:0.85rem;color:var(--muted)">📋 Product Managers</div>
+        <div style="padding:20px;border:1px solid var(--border);font-size:0.85rem;color:var(--muted)">🤝 Business Development</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--off-black)">
+    <div class="section-label">Core Capabilities</div>
+    <div class="grid-4" style="gap:24px;margin-top:48px">
+      <div class="card"><div class="card-icon">🏗</div><h4>Native Product Engineering</h4><p>Envision, engineer and develop our products — from concept to scale.</p></div>
+      <div class="card"><div class="card-icon">🔧</div><h4>Custom Engineering</h4><p>Bespoke solutions built precisely for your business — no off-the-shelf compromise.</p></div>
+      <div class="card"><div class="card-icon">🗺</div><h4>Strategic AI Engineering</h4><p>Roadmaps for AI adoption and practical implementation tailored to your goals.</p></div>
+      <div class="card"><div class="card-icon">📈</div><h4>Business Transformation</h4><p>Measurable impact and sustainable growth across every engagement we take on.</p></div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <h2>Let's make something<br><em style="color:var(--accent)">great together.</em></h2>
+    <p>Let us know what challenges you are trying to solve so we can help.</p>
+    <div class="cta-circle" onclick="showPage('contact')">→</div>
+  </div>
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">en<span>.</span>pointe</div>
+        <p class="footer-desc">Advanced software and product development company, creating enterprise-grade AI and technology solutions.</p>
+        <div class="footer-social"><a href="#">LinkedIn</a><a href="#">Twitter</a></div>
+      </div>
+      <div>
+        <div class="footer-nav-title">Navigation</div>
+        <ul class="footer-nav-links">
+          <li><a onclick="showPage('home')">Home</a></li>
+          <li><a onclick="showPage('ai')">AI Transformation</a></li>
+          <li><a onclick="showPage('productivity')">Products</a></li>
+          <li><a onclick="showPage('contact')">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-nav-title">Industries</div>
+        <ul class="footer-nav-links">
+          <li><a onclick="showPage('media')">Media &amp; Entertainment</a></li>
+          <li><a onclick="showPage('retail')">Retail &amp; Logistics</a></li>
+          <li><a onclick="showPage('experiences')">Experiences &amp; Attractions</a></li>
+          <li><a onclick="showPage('ecommerce')">Ecommerce &amp; Publishing</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-nav-title">Offices</div>
+        <div class="footer-offices">
+          <div><div class="footer-office-name">UAE</div><div class="footer-office-addr">3rd Floor, Office 307, Block 6, Al Hamsa Building, Al Karama, Dubai, UAE</div></div>
+          <div><div class="footer-office-name">India</div><div class="footer-office-addr">1/29, Vishal Mall, New Link Rd Dahisar, Mumbai, Maharashtra 400102</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Enpointe Co.</div>
+      <div class="footer-email">info@enpointe.io</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ════════════════════════════════════════
+  CONTACT PAGE
+════════════════════════════════════════ -->
+<div id="page-contact" class="page">
+  <div class="page-hero" style="min-height:60vh">
+    <div class="eyebrow">Get In Touch</div>
+    <h1>LET'S BUILD<br>SOMETHING.</h1>
+    <p>Tell us about your challenge. We'll respond within 24 hours with a path forward.</p>
+  </div>
+
+  <section class="black">
+    <div class="two-col" style="gap:80px">
+      <div>
+        <div class="section-label">Contact Us</div>
+        <h2 class="display" style="margin-bottom:32px">We're ready<br>when <em>you are.</em></h2>
+        <div style="display:flex;flex-direction:column;gap:32px;margin-top:40px">
+          <div>
+            <div class="footer-office-name">UAE (HQ)</div>
+            <div style="color:var(--muted);font-size:0.9rem;line-height:1.7">3rd Floor, Office 307, Block 6, Al Hamsa Building,<br>Al Karama, Dubai, UAE</div>
+          </div>
+          <div>
+            <div class="footer-office-name">India</div>
+            <div style="color:var(--muted);font-size:0.9rem;line-height:1.7">1/29, Vishal Mall, New Link Rd Dahisar,<br>Andheri West, Mumbai, Maharashtra 400102</div>
+          </div>
+          <div>
+            <div class="footer-office-name">USA</div>
+            <div style="color:var(--muted);font-size:0.9rem;line-height:1.7">Sunset Gower Studios, 1438 N. Gower Street,<br>Box #26, Los Angeles, CA 90028</div>
+          </div>
+          <div>
+            <div class="footer-office-name">Email</div>
+            <div style="color:var(--white);font-size:1rem">info@enpointe.io</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="border:1px solid var(--border);padding:48px;background:var(--off-black)">
+          <h3 style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;margin-bottom:28px">Send us a message</h3>
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <div>
+              <label style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px">Name</label>
+              <input type="text" style="width:100%;background:var(--dark);border:1px solid var(--border);color:var(--white);padding:14px 16px;font-family:var(--font-body);font-size:0.9rem;outline:none;" placeholder="Your full name">
+            </div>
+            <div>
+              <label style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px">Email</label>
+              <input type="email" style="width:100%;background:var(--dark);border:1px solid var(--border);color:var(--white);padding:14px 16px;font-family:var(--font-body);font-size:0.9rem;outline:none;" placeholder="your@email.com">
+            </div>
+            <div>
+              <label style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px">Company</label>
+              <input type="text" style="width:100%;background:var(--dark);border:1px solid var(--border);color:var(--white);padding:14px 16px;font-family:var(--font-body);font-size:0.9rem;outline:none;" placeholder="Your company name">
+            </div>
+            <div>
+              <label style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px">What are you building?</label>
+              <textarea rows="5" style="width:100%;background:var(--dark);border:1px solid var(--border);color:var(--white);padding:14px 16px;font-family:var(--font-body);font-size:0.9rem;outline:none;resize:vertical;" placeholder="Tell us about your challenge or project..."></textarea>
+            </div>
+            <button class="btn-primary" style="width:100%;justify-content:center;margin-top:8px">Send Message →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-bottom" style="border-top:1px solid var(--border);padding:24px 0 0;">
+      <div class="footer-copy">© 2025 Enpointe Co.</div>
+      <div class="footer-email">info@enpointe.io</div>
+    </div>
+  </footer>
+</div>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const page = document.getElementById('page-' + id);
+  if (page) {
+    page.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+// Accordion functionality
+document.addEventListener('click', function(e) {
+  const trigger = e.target.closest('.accordion-trigger');
+  if (!trigger) return;
+  const content = trigger.nextElementSibling;
+  const chevron = trigger.querySelector('.acc-chevron');
+  if (content) {
+    content.classList.toggle('open');
+    if (chevron) chevron.classList.toggle('open');
+  }
+});
+
+// Prevent dropdown links from refreshing
+document.querySelectorAll('.dropdown a, .nav-links > li > a').forEach(a => {
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+  });
+});
+
+// Active nav highlighting
+document.querySelectorAll('[onclick^="showPage"]').forEach(el => {
+  el.style.cursor = 'pointer';
+});
+</script>
+</body>
+</html>

@@ -14,13 +14,17 @@ import Integration from "@/components/Integration";
 import Stats from "@/components/Stats";
 import Services from "@/components/Services";
 import CaseStudy from "@/components/CaseStudy";
+import Snapshot from "@/components/Snapshot";
+import Founder from "@/components/Founder";
 
 export default function Home() {
   return (
     <div>
       <Hero />
       <Visionary />
+      <Founder />
       <Stats />
+      <Snapshot />
       <Services />
       <CaseStudy />
       <Integration />

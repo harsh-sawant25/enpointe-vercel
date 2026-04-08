@@ -1,258 +1,258 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
-const PAGE_SIZE = 4;
-const FLIP_MS = 280;
-const STAGGER_MS = 80;
-const DISPLAY_MS = 4500;
-const RESET_AFTER = 1200; // Increased to ensure all phases finish comfortably
-
-interface Stat { number: string; label: string; description: string; }
-type Phase = "idle" | "top" | "bottom" | "settled";
-
-const ALL_STATS: Stat[] = [
-    // Group 1: Cinema & Experience Presence
-    { number: "30M+", label: "Tickets sold", description: "Across cinema and experience platforms" },
-    { number: "3000+", label: "Active Screens", description: "Powering theaters and venues worldwide" },
-    { number: "10M+", label: "Platform interactions", description: "Engaging users through digital touchpoints" },
-    { number: "40+", label: "Years of expertise", description: "Leading the media technology landscape" },
-
-    // Group 2: User Scale & Infrastructure (New Unique Dummy Data)
-    { number: "20M+", label: "Registered Users", description: "Connecting audiences to their favorite content" },
-    { number: "1000+", label: "Enterprise Clients", description: "Trusted by major studios and global chains" },
-    { number: "90M+", label: "API Requests", description: "High-concurrency data handled every hour" },
-    { number: "70+", label: "Tech Patents", description: "Innovation at the core of our infrastructure" },
+/* ─── DATA ─── */
+const CLIENTS = [
+    "Cinépolis",
+    "Dharma",
+    "EMAAR",
+    "NMD",
+    "People Matters",
+    "Novo Cinemas",
+    "Star Cinemas",
 ];
 
-function chunk<T>(arr: T[], n: number): T[][] {
-    const out: T[][] = [];
-    for (let i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n));
-    return out;
+interface StatItem {
+    number: string;
+    suffix: string;
+    label: string;
+    description: string;
 }
 
-const NumDisplay = ({ stat }: { stat: Stat }) => (
-    <div className="text-center px-3" style={{ backfaceVisibility: "hidden" }}>
-        <h1 className="m-0 text-[48px] md:text-[64px] lg:text-[72px]" style={{
-            fontFamily: '"Gupter","Gupter Placeholder",serif',
-            fontWeight: 700, letterSpacing: "-2.5px",
-            lineHeight: 1, color: "rgb(23,23,23)",
-            WebkitFontSmoothing: "antialiased",
-        }}>
-            {stat.number}
-        </h1>
-    </div>
-);
+const CLIENT_DATA: Record<string, StatItem[]> = {
+    "Cinépolis": [
+        { number: "15", suffix: "M+", label: "Annual Admissions", description: "Across primary markets" },
+        { number: "800", suffix: "+", label: "Active Screens", description: "Managed via Enpointe" },
+        { number: "99.9", suffix: "%", label: "Uptime", description: "Kiosk & digital operations" },
+        { number: "12", suffix: "", label: "Years Partnered", description: "Long-term tech collaboration" },
+    ],
+    "Dharma": [
+        { number: "50", suffix: "+", label: "Blockbusters", description: "Distribution managed digitally" },
+        { number: "25", suffix: "M+", label: "Fan Engagement", description: "Across social platforms" },
+        { number: "5", suffix: "K+", label: "Theaters", description: "Distribution network" },
+        { number: "100", suffix: "%", label: "Digital Workflow", description: "Automation achievement" },
+    ],
+    "EMAAR": [
+        { number: "120", suffix: "M+", label: "Visitors", description: "Managed yearly" },
+        { number: "1500", suffix: "+", label: "Digital Screens", description: "Across properties" },
+        { number: "45", suffix: "+", label: "Properties", description: "Global presence" },
+        { number: "20", suffix: "M+", label: "Loyalty Users", description: "Integrated systems" },
+    ],
+    "NMD": [
+        { number: "10", suffix: "M+", label: "Active Users", description: "Daily mobile interactions" },
+        { number: "500", suffix: "+", label: "Retail Points", description: "Automated distribution" },
+        { number: "15", suffix: "K+", label: "Daily Transactions", description: "Processed securely" },
+        { number: "30", suffix: "sec", label: "Avg Response", description: "Customer support speed" },
+    ],
+    "People Matters": [
+        { number: "2", suffix: "M+", label: "HR Leaders", description: "Community reach" },
+        { number: "150", suffix: "+", label: "Events", description: "Managed digitally" },
+        { number: "500", suffix: "K+", label: "Active Learners", description: "Platform engagement" },
+        { number: "10", suffix: "yr", label: "Engagement", description: "Average client retention" },
+    ],
+    "Novo Cinemas": [
+        { number: "12", suffix: "M+", label: "Tickets Sold", description: "Regional dominance" },
+        { number: "200", suffix: "+", label: "Screens", description: "Premium experience" },
+        { number: "85", suffix: "%", label: "Mobile Booking", description: "Digital transformation" },
+        { number: "4", suffix: ".8", label: "User Rating", description: "App store excellence" },
+    ],
+    "Star Cinemas": [
+        { number: "8", suffix: "M+", label: "Annual Footfall", description: "In-mall experiences" },
+        { number: "150", suffix: "+", label: "Screens", description: "Expanding footprint" },
+        { number: "95", suffix: "%", label: "Service Score", description: "Customer satisfaction" },
+        { number: "5", suffix: "yr", label: "Tech Upgrade", description: "Continuous innovation" },
+    ],
+};
 
-const TextDisplay = ({ stat }: { stat: Stat }) => (
-    <div className="border-t border-[rgba(23,23,23,0.12)] pt-3 md:pt-4 flex flex-col items-center gap-1 text-center px-3 w-full" style={{ backfaceVisibility: "hidden" }}>
-        <p className="m-0 text-[18px] md:text-[22px] lg:text-[26px] text-center w-full" style={{
-            fontFamily: '"Inter",sans-serif', fontWeight: 600,
-            letterSpacing: "-1.04px", lineHeight: "1.3", color: "rgb(12,12,12)",
-            WebkitFontSmoothing: "antialiased",
-        }}>
-            {stat.label}
-        </p>
-        <p className="m-0 text-[14px] md:text-[15px] lg:text-[16px] text-center w-full" style={{
-            fontFamily: '"Inter",sans-serif', fontWeight: 500,
-            letterSpacing: "-0.3px", lineHeight: "1.4", color: "rgba(12,12,12,0.6)",
-            WebkitFontSmoothing: "antialiased",
-        }}>
-            {stat.description}
-        </p>
-    </div>
-);
-
-const FlipCard = ({
-    current, next, isFlipping, staggerDelay,
-}: {
-    current: Stat; next: Stat; isFlipping: boolean; staggerDelay: number;
-}) => {
-    const [phase, setPhase] = useState<Phase>("idle");
-    const snapNext = useRef<Stat>(next);
+/* ─── Animated counter hook ─── */
+function useCountUp(target: number, duration = 2000, shouldStart = false) {
+    const [count, setCount] = useState(0);
 
     useEffect(() => {
-        if (!isFlipping) {
-            // After data update, reset to idle
-            const t = setTimeout(() => setPhase("idle"), 50);
-            return () => clearTimeout(t);
-        }
+        if (!shouldStart) return;
 
-        snapNext.current = next;
+        // Reset count when target changes
+        setCount(0);
 
-        const t1 = setTimeout(() => setPhase("top"), staggerDelay);
-        const t2 = setTimeout(() => setPhase("bottom"), staggerDelay + FLIP_MS);
-        const t3 = setTimeout(() => setPhase("settled"), staggerDelay + FLIP_MS * 2);
+        const startTime = performance.now();
+        let animationFrame: number;
 
-        return () => {
-            clearTimeout(t1);
-            clearTimeout(t2);
-            clearTimeout(t3);
+        const step = (now: number) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease-out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setCount(Math.floor(eased * target));
+            if (progress < 1) {
+                animationFrame = requestAnimationFrame(step);
+            }
         };
-    }, [isFlipping, staggerDelay, next]);
 
-    const displayNext = snapNext.current;
+        animationFrame = requestAnimationFrame(step);
+        return () => cancelAnimationFrame(animationFrame);
+    }, [shouldStart, target, duration]);
 
-    // Visibility Logic to prevent overlap
-    const showTopFlap = phase === "idle" || phase === "top";
-    const showTopStaticNext = phase !== "idle"; // Number section static back
+    return count;
+}
 
-    const showBottomStaticCurr = phase !== "settled"; // Text section static back
-    const showBottomFlap = phase === "bottom" || phase === "settled";
+/* ─── Stat Card ─── */
+const StatCard = ({ stat, inView, delay }: { stat: StatItem; inView: boolean; delay: number }) => {
+    const numericValue = parseInt(stat.number, 10);
+    const count = useCountUp(numericValue, 2000, inView);
 
     return (
-        <div className="flex flex-col w-full max-w-[280px] mx-auto" style={{ transformStyle: "preserve-3d" }}>
-
-            {/* ── NUMBER section ── */}
-            <div style={{ position: "relative", overflow: "hidden", perspective: "1000px", transformStyle: "preserve-3d" }}>
-                {/* Height driver */}
-                <div style={{ visibility: "hidden", pointerEvents: "none" }}>
-                    <NumDisplay stat={current} />
-                </div>
-
-                {/* Static: NEXT number (revealed as old folds away) */}
-                <div style={{
-                    position: "absolute", inset: 0, zIndex: 1,
-                    visibility: showTopStaticNext ? "visible" : "hidden",
-                    transform: "translateZ(0)",
-                }}>
-                    <NumDisplay stat={displayNext} />
-                </div>
-
-                {/* Flap: CURRENT number (folds down) */}
-                <div style={{
-                    position: "absolute", inset: 0, zIndex: 2,
-                    transformOrigin: "center bottom",
-                    transform: (phase !== "idle") ? "rotateX(-90deg)" : "rotateX(0deg)",
-                    transition: phase === "top" ? `transform ${FLIP_MS}ms ease-in` : "none",
-                    backfaceVisibility: "hidden",
-                    visibility: showTopFlap ? "visible" : "hidden",
-                    willChange: "transform",
-                }}>
-                    <NumDisplay stat={current} />
-                </div>
+        <div
+            className="py-10 px-7 md:py-12 md:px-9 border-r border-[rgba(255,255,255,0.08)] last:border-r-0
+        opacity-0 translate-y-0 transition-all duration-700 ease-out"
+            style={{
+                transitionDelay: `${delay}ms`,
+                ...(inView ? { opacity: 1, transform: "translateY(0)" } : {}),
+            }}
+        >
+            {/* Big Number */}
+            <div
+                className="text-[clamp(2.5rem,5vw,4.5rem)] font-[800] leading-none tracking-[-0.04em] text-[#f5f5f0] mb-2.5"
+                style={{ fontFamily: "'Syne', sans-serif" }}
+            >
+                {count}
+                <span className="text-white">{stat.suffix}</span>
             </div>
 
-            {/* ── TEXT section ── */}
-            <div style={{ position: "relative", overflow: "hidden", perspective: "1000px", transformStyle: "preserve-3d" }}>
-                {/* Height driver */}
-                <div style={{ visibility: "hidden", pointerEvents: "none" }}>
-                    <TextDisplay stat={current} />
-                </div>
-
-                {/* Static: CURRENT text (covers as flap folds up) */}
-                <div style={{
-                    position: "absolute", inset: 0, zIndex: 1,
-                    visibility: showBottomStaticCurr ? "visible" : "hidden",
-                    transform: "translateZ(0)",
-                }}>
-                    <TextDisplay stat={current} />
-                </div>
-
-                {/* Flap: NEXT text (folds up to replace) */}
-                <div style={{
-                    position: "absolute", inset: 0, zIndex: 3, // Higher than static curr
-                    transformOrigin: "center top",
-                    transform: (phase === "settled" || phase === "bottom") ? "rotateX(0deg)" : "rotateX(90deg)",
-                    transition: phase === "bottom" ? `transform ${FLIP_MS}ms ease-out` : "none",
-                    backfaceVisibility: "hidden",
-                    visibility: showBottomFlap ? "visible" : "hidden",
-                    willChange: "transform",
-                }}>
-                    <TextDisplay stat={displayNext} />
-                </div>
+            {/* Label */}
+            <div
+                className="text-[0.78rem] text-[rgba(245,245,240,0.5)] uppercase tracking-[0.1em] leading-[1.5]"
+                style={{ fontFamily: "'DM Sans', sans-serif" }}
+            >
+                {stat.label}
+                <br />
+                {stat.description}
             </div>
         </div>
     );
 };
 
+/* ─── Main Stats Component ─── */
 const Stats = () => {
-    const groups = chunk(ALL_STATS, PAGE_SIZE);
-    const [currentIdx, setCurrentIdx] = useState(0);
-    const [isFlipping, setIsFlipping] = useState(false);
-    const nextIdx = (currentIdx + 1) % groups.length;
+    const sectionRef = useRef<HTMLElement>(null);
+    const [inView, setInView] = useState(false);
+    const [activeClient, setActiveClient] = useState<string>(CLIENTS[0]);
 
     useEffect(() => {
-        const timer = setInterval(() => {
-            setIsFlipping(true);
-            setTimeout(() => {
-                setIsFlipping(false);
-                setCurrentIdx(prev => (prev + 1) % groups.length);
-            }, RESET_AFTER);
-        }, DISPLAY_MS);
-        return () => clearInterval(timer);
-    }, [groups.length]);
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setInView(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.15 }
+        );
+        if (sectionRef.current) observer.observe(sectionRef.current);
+        return () => observer.disconnect();
+    }, []);
 
-    const current = groups[currentIdx];
-    const next = groups[nextIdx];
+    const activeStats = CLIENT_DATA[activeClient] || [];
 
     return (
-        <section className="relative w-full bg-white overflow-hidden" id="our-impact">
-            <div className="w-full max-w-[1240px] mx-auto px-6 py-12 md:py-20 lg:py-26 flex flex-col items-center gap-10 md:gap-16">
-
-                {/* Heading Area - Matching Source Image 1 */}
-                <div className="w-full flex flex-col md:flex-row items-start justify-between gap-8 mb-4">
-                    
-                    {/* Badge: "Our Impact" with Arrow icon */}
-                    <div className="flex items-center gap-3 py-1">
-                        <div className="opacity-60">
-                            <svg 
-                                width="14" 
-                                height="14" 
-                                viewBox="0 0 24 24" 
-                                fill="none" 
-                                stroke="rgb(23, 23, 23)" 
-                                strokeWidth="2.5" 
-                                strokeLinecap="round" 
-                                strokeLinejoin="round"
-                            >
-                                <polyline points="15 10 20 15 15 20" />
-                                <path d="M4 4v7a4 4 0 0 0 4 4h12" />
-                            </svg>
-                        </div>
-                        <p 
-                            className="m-0 text-[14px] md:text-[15px]" 
-                            style={{
-                                color: "rgb(23, 23, 23)", 
-                                fontFamily: '"Inter", sans-serif',
-                                fontWeight: 500, 
-                                letterSpacing: "-0.2px",
-                            }}
-                        >
-                            Our Impact
-                        </p>
-                    </div>
-
-                    {/* Heading: Right Aligned */}
-                    <div className="max-w-[700px] text-right">
-                        <h3 
-                            dir="auto" 
-                            className="m-0 text-[36px] md:text-[48px] tracking-[-1.8px]" 
-                            style={{
-                                fontFamily: '"Gupter", serif', 
-                                fontWeight: 400,
-                                color: "var(--token-eb09dbbf-ef85-4b7f-81a5-44e9b062efb7, rgb(23, 23, 23))",
-                                textAlign: "right",
-                                lineHeight: "60.8px",
-                            }}
-                        >
-                            A snapshot of the work we&apos;ve delivered so far.
-                        </h3>
-                    </div>
+        <section
+            ref={sectionRef}
+            id="our-impact"
+            className="bg-[#111111]"
+            style={{ padding: 0 }}
+        >
+            {/* Google Fonts */}
+            {/* <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+      `}</style> */}
+            {/* ── Header ── */}
+            <div className="px-6 pt-16 pb-0 md:px-20 md:pt-20">
+                {/* Section label  */}
+                <div
+                    className="flex items-center gap-2.5 text-[0.68rem] tracking-[0.2em] uppercase text-white mb-4"
+                    style={{ fontFamily: "'DM Sans', sans-serif" }}
+                >
+                    <span className="block w-5 h-px bg-white" />
+                    Trusted by Visionaries
                 </div>
 
-                {/* Flip cards row/grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-row gap-8 md:gap-12 lg:gap-8 w-full items-start justify-center" style={{ minHeight: "240px" }}>
-                    {Array.from({ length: PAGE_SIZE }).map((_, i) => (
-                        <FlipCard
-                            key={i}
-                            current={current[i] ?? current[0]}
-                            next={next[i] ?? next[0]}
-                            isFlipping={isFlipping}
-                            staggerDelay={i * STAGGER_MS}
+                {/* Display heading */}
+                <h2
+                    className="text-[clamp(2rem,4.5vw,4rem)] font-[800] leading-[1.05] tracking-[-0.025em] text-[#f5f5f0] mb-12"
+                    style={{ fontFamily: "'Syne', sans-serif" }}
+                >
+                    Our Clients
+                </h2>
+            </div>
+
+            {/* ── Mobile Client Selector ── */}
+            <div className="md:hidden px-6 pb-8 -mt-4 opacity-0 translate-y-4 transition-all duration-700 delay-300"
+                style={inView ? { opacity: 1, transform: "translateY(0)" } : {}}
+            >
+                <div className="relative group">
+                    <select
+                        value={activeClient}
+                        onChange={(e) => setActiveClient(e.target.value)}
+                        className="w-full bg-[#1a1a1a] border border-[rgba(255,255,255,0.1)] text-white py-5 px-6 rounded-none appearance-none font-[700] uppercase tracking-[0.12em] text-[0.85rem] focus:outline-none focus:border-white transition-colors cursor-pointer"
+                        style={{ fontFamily: "'Syne', sans-serif" }}
+                    >
+                        {CLIENTS.map((name) => (
+                            <option key={name} value={name} className="bg-[#111] py-2">
+                                {name}
+                            </option>
+                        ))}
+                    </select>
+                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none group-hover:translate-y-[-40%] transition-transform duration-300">
+                        <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 1L7 7L13 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                    </div>
+                    {/* Visual embellishment */}
+                    <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.2)] to-transparent" />
+                </div>
+            </div>
+
+            {/* ── Client Logo Row (Desktop Only) ── */}
+            <div
+                className="hidden md:flex items-center justify-center flex-wrap border-t border-[rgba(255,255,255,0.08)]"
+            >
+                {CLIENTS.map((name, i) => (
+                    <button
+                        key={name}
+                        onClick={() => setActiveClient(name)}
+                        className={`
+              flex-1 min-w-[120px] py-8 px-6 md:px-10
+              text-center text-[0.75rem] font-[700] tracking-[0.12em] uppercase
+              transition-all duration-300 relative group
+              ${activeClient === name ? "text-white" : "text-[rgba(245,245,240,0.5)] hover:text-[#f5f5f0]"}
+              ${i < CLIENTS.length - 1 ? "border-r border-[rgba(255,255,255,0.08)]" : ""}
+              opacity-0 translate-y-3
+            `}
+                        style={{
+                            fontFamily: "'Syne', sans-serif",
+                            transitionDelay: `${i * 80}ms`,
+                            ...(inView ? { opacity: 1, transform: "translateY(0)" } : {}),
+                        }}
+                    >
+                        {name}
+                        {/* Active Indicator Line */}
+                        <div
+                            className={`absolute bottom-0 left-0 w-full h-0.5 bg-white transition-transform duration-500 origin-left
+                ${activeClient === name ? "scale-x-100" : "scale-x-0 group-hover:scale-x-50"}
+              `}
                         />
+                    </button>
+                ))}
+            </div>
+
+            {/* ── Stats Row ── */}
+            <div className="px-6 py-16 md:px-20 md:py-20">
+                <div
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border border-[rgba(255,255,255,0.08)]"
+                >
+                    {activeStats.map((stat, i) => (
+                        <StatCard key={`${activeClient}-${stat.label}`} stat={stat} inView={inView} delay={i * 120} />
                     ))}
                 </div>
-
             </div>
         </section>
     );
