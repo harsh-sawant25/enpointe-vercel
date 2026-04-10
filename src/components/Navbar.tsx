@@ -10,7 +10,7 @@ import Link from "next/link";
 const navItems = [
   {
     label: "Industries",
-    href: "/industries",
+    href: "",
     subItems: [
       "Media & Entertainment",
       "Experience & Attractions",
@@ -18,9 +18,9 @@ const navItems = [
       "Publishing & Ecommerce",
     ]
   },
-  { label: "AI Transformation", href: "/ai", subItems: ["AI Solution", "AI Products"] },
-  { label: "Products", href: "/products", subItems: ["Retail Media & Entertainment", "Productivity Tools"] },
-  { label: "About Us", href: "/about" },
+  { label: "AI Transformation", href: "", subItems: ["AI Solution", "AI Products"] },
+  { label: "Products", href: "", subItems: ["Retail Media & Entertainment", "Productivity Tools"] },
+  { label: "About Us", href: "" },
 ];
 
 const Navbar = () => {
