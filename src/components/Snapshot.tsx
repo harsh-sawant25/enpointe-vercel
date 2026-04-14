@@ -1,4 +1,5 @@
 "use client";
+import { interbold, intermedium } from '@/fonts';
 import React from 'react';
 
 const Snapshot = () => {
@@ -74,19 +75,17 @@ const Snapshot = () => {
                             className="bg-[#111111] p-9 group"
                         >
                             <div
-                                className="text-[#00e5c8] text-[0.62rem] tracking-[0.2em] uppercase mb-2"
-                                style={{ fontFamily: "'DM Sans', sans-serif" }}
+                                className={`${interbold.className} text-[#A6DAFF] text-[0.62rem] tracking-[0.2em] uppercase mb-2`}
                             >
                                 {card.label}
                             </div>
                             <h4
-                                className="text-white text-[1rem] font-[700] mb-2 leading-snug"
-                                style={{ fontFamily: "'Syne', sans-serif" }}
+                                className={`${interbold.className} text-white text-[1rem] font-[700] mb-2 leading-snug`}
                             >
                                 {card.title}
                             </h4>
                             <p
-                                className="text-[rgba(245,245,240,0.5)] text-[0.82rem] leading-[1.6]"
+                                className={`${intermedium.className} text-[rgba(245,245,240,0.5)] text-[0.82rem] leading-[1.6]`}
                                 style={{ fontFamily: "'DM Sans', sans-serif" }}
                             >
                                 {card.description}

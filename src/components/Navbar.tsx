@@ -19,7 +19,7 @@ const navItems = [
     ]
   },
   { label: "AI Transformation", href: "", subItems: ["AI Solution", "AI Products"] },
-  { label: "Products", href: "", subItems: ["Retail Media & Entertainment", "Productivity Tools"] },
+  { label: "Products", href: "", subItems: ["Retail Media & Entertainment", "AI Products"] },
   { label: "About Us", href: "" },
 ];
 

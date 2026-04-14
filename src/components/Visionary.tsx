@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import "@fontsource/inter/500.css";
 import "@fontsource/instrument-serif/400-italic.css";
+import { gupterbold, guptermedium } from "@/fonts";
 
 const LOGOS = [
     { src: "https://framerusercontent.com/images/cA77TQVfGxeMQJbtj3ar1ZftUU4.png", alt: "Logo 1", width: 213, height: 84 },
@@ -29,30 +30,15 @@ const Visionary = () => {
                 >
                     <h2 className="text-[44px] leading-[1.1] font-medium tracking-tight">
                         <span
-                            className="inline-block bg-clip-text text-transparent pb-1"
-                            style={{
-                                backgroundImage: "linear-gradient(161deg, rgb(218, 234, 245) 51.65%, rgb(4, 7, 13) 166%)",
-                                fontFamily: '"Inter", sans-serif'
-                            }}
+                            className={`${guptermedium.className} text-white inline-block bg-clip-text pb-1`}
                         >
-                            Trusted by{" "}
-                            <span
-                                className="text-[#e4e9f2]"
-                                style={{
-                                    fontFamily: '"Instrument Serif", serif',
-                                    fontStyle: "italic",
-                                    fontWeight: 400,
-                                    WebkitTextFillColor: "#e4e9f2" // overrides the gradient clip
-                                }}
-                            >
-                                Visionaries
-                            </span>
+                            Trusted by Visionaries
                         </span>
                     </h2>
                 </motion.div>
 
                 {/* Subtitle */}
-                <motion.p
+                {/* <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
@@ -61,7 +47,7 @@ const Visionary = () => {
                     style={{ fontFamily: '"Inter", sans-serif' }}
                 >
                     If you're still not convinced, these are a few visionaries that we have worked with
-                </motion.p>
+                </motion.p> */}
 
             </div>
 

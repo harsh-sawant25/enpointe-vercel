@@ -8,6 +8,7 @@ import "@fontsource/inter/500.css";
 import "@fontsource/inter/600.css";
 import "@fontsource/inter/700.css";
 import "@fontsource/gupter/400.css";
+import { interregular } from "@/fonts";
 
 // ─── Particle Canvas ──────────────────────────────────────────────────────────
 const ParticleCanvas = () => {
@@ -163,11 +164,11 @@ const Hero = () => {
             transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="w-full max-w-[920px] mx-auto px-2"
           >
-            <h1 className="leading-[1.05] tracking-[-0.02em] text-center">
-              <span className="block not-italic text-white text-[52px] sm:text-[60px] font-medium text-center">
+            <h1 className="leading-[1.05] tracking-[-0.01em] text-center">
+              <span className={`${interregular.className} block not-italic text-[#E4E9F2] text-[52px] sm:text-[60px] font-medium text-center`}>
                 Engineering
               </span>
-              <span className="block italic text-white text-[52px] sm:text-[80px] font-medium text-center">
+              <span className={`${interregular.className} block italic text-[#E4E9F2] text-[52px] sm:text-[80px] font-medium text-center`}>
                 Intelligence At Scale.
               </span>
 
@@ -179,7 +180,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-5 mb-10 text-white/60 font-normal text-[16px] max-w-[520px] mx-auto text-center"
+            className="mt-5 mb-10 text-[#D5D8E6] font-normal text-[16px] max-w-[520px] mx-auto text-center"
           >
             We build systems that bring intelligence into modern businesses — from AI transformation to enterprise-grade platforms.
           </motion.p>
@@ -242,13 +243,7 @@ const Hero = () => {
                     framer-styles-preset-r6b8wq
                   */}
                   <p
-                    className="m-0 leading-none whitespace-nowrap"
-                    style={{
-                      color: "rgb(255,255,255)",
-                      fontFamily: '"Inter", sans-serif',
-                      fontSize: 15,
-                      fontWeight: 500,
-                    }}
+                    className={`${interregular.className} text-[16px] text-white font-semibold m-0 leading-none whitespace-nowrap`}
                   >
                     Explore Our Work
                   </p>
@@ -301,45 +296,6 @@ const Hero = () => {
           </Link>
         </motion.div>
       </section >
-
-      {/* ── Founder Note ── */}
-      {/* < section
-        id="founder-note"
-        className="relative w-full bg-white rounded-t-[40px] md:rounded-t-[80px] -mt-[40px] md:-mt-[70px] z-20"
-      >
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 pt-20 pb-16 md:pt-24 md:pb-24 flex items-center justify-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full max-w-[800px] mx-auto"
-          >
-            <h3
-              className="text-center text-[#171717] tracking-[-0.03em] leading-[1.4]"
-              style={{ fontFamily: '"Inter", sans-serif', fontSize: "32px" }}
-            >
-              Businesses run on a network of{" "}
-              <span
-                className="font-normal"
-                style={{ fontFamily: '"Gupter", serif', fontSize: "32px" }}
-              >
-                interconnected systems.
-              </span>{" "}
-              From ticketing and payments to venue operations and guest interactions, every part
-              of the experience depends on{" "}
-              <span
-                className="font-normal"
-                style={{ fontFamily: '"Gupter", serif', fontSize: "32px" }}
-              >
-                technology working together
-              </span>
-              . <br /> We build the technology that makes this possible
-            </h3>
-          </motion.div>
-        </div>
-        <div className="w-full h-[1px] bg-black/[0.1]" />
-      </section > */}
     </>
   );
 };

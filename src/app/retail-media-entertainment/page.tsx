@@ -1,43 +1,30 @@
 "use client";
 
 import React from 'react';
-import { Syne, DM_Sans } from 'next/font/google';
-
-const syne = Syne({
-    subsets: ['latin'],
-    weight: ['400', '500', '600', '700', '800'],
-    variable: '--font-syne',
-});
-
-const dmSans = DM_Sans({
-    subsets: ['latin'],
-    weight: ['300', '400', '500'],
-    style: ['normal', 'italic'],
-    variable: '--font-dm-sans',
-});
+import { interregular, interbold } from '@/fonts';
 
 const SectionLabel = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
-    <div className={`flex items-center gap-2.5 mb-4 text-[0.68rem] tracking-[0.2em] uppercase text-white ${className}`}>
-        <div className="w-5 h-[1px] bg-white" />
+    <div className={`${interregular.className} flex items-center gap-2.5 mb-4 text-[0.68rem] tracking-[0.2em] uppercase text-[#A6DAFF] ${className}`}>
+        <div className="w-5 h-[1px] bg-[#A6DAFF]" />
         {children}
     </div>
 );
 
 const FeatureItem = ({ children }: { children: React.ReactNode }) => (
-    <div className="flex items-center gap-3 text-[0.88rem] text-white/60 py-2 border-b border-white/5 last:border-b-0">
-        <div className="w-1.5 h-1.5 rounded-full bg-white/40 flex-shrink-0" />
+    <div className={`${interregular.className} flex items-center gap-3 text-[0.88rem] text-white/60 py-2 border-b border-white/5 last:border-b-0 font-normal`}>
+        <div className="w-1.5 h-1.5 rounded-full bg-[#A6DAFF]/60 flex-shrink-0" />
         {children}
     </div>
 );
 
 const ProductCard = ({ tag, title, description, features, className = "" }: { tag: string, title: string, description: string, features?: string[], className?: string }) => (
-    <div className={`group relative border border-white/10 p-0 bg-[#111111] transition-all duration-300 hover:border-white/30 overflow-hidden ${className}`}>
+    <div className={`group relative border border-white/10 p-0 bg-[#111111] transition-all duration-300 hover:border-[#A6DAFF] overflow-hidden ${className}`}>
         <div className="p-10">
-            <div className="text-[0.6rem] tracking-[0.2em] uppercase text-white/40 mb-3 border border-white/10 inline-block px-2 py-1">
+            <div className={`${interregular.className} text-[0.6rem] tracking-[0.2em] uppercase text-white/40 mb-3 border border-white/10 inline-block px-2 py-1 font-normal`}>
                 {tag}
             </div>
-            <h3 className="font-syne text-[1.5rem] font-bold mb-4 text-white uppercase">{title}</h3>
-            <p className="text-[0.9rem] text-white/50 leading-[1.6] mb-8 font-light min-h-[80px]">
+            <h3 className={`${interbold.className} text-[1.5rem] font-bold mb-4 text-white uppercase`}>{title}</h3>
+            <p className={`${interregular.className} text-[0.9rem] text-white/50 leading-[1.6] mb-8 font-normal min-h-[80px]`}>
                 {description}
             </p>
             {features && (
@@ -53,45 +40,45 @@ const ProductCard = ({ tag, title, description, features, className = "" }: { ta
 
 const Page = () => {
     return (
-        <div className={`${syne.variable} ${dmSans.variable} font-dm-sans bg-[#080808] text-[#f5f5f0] selection:bg-white/20`}>
+        <div className={`${interregular.className} bg-[#171717] text-[#f5f5f0]`}>
             {/* Page Hero */}
             <section className="relative px-5 md:px-20 pt-40 pb-20 min-h-[50vh] flex flex-col justify-end border-b border-white/10 overflow-hidden text-white">
                 <div className="absolute inset-0 z-0 pointer-events-none">
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_0%_100%,rgba(255,255,255,0.03)_0%,transparent_60%)]" />
+                    <div className="absolute inset-0" />
                 </div>
 
                 <div className="relative z-10 w-full max-w-7xl mx-auto">
-                    <div className="text-[0.68rem] tracking-[0.2em] uppercase text-white mb-4">
+                    <div className={`${interregular.className} text-[0.68rem] tracking-[0.2em] uppercase text-[#A6DAFF] mb-4`}>
                         Products / Retail, Media & Entertainment Tech
                     </div>
-                    <h1 className="font-syne text-[clamp(2.5rem,8vw,8rem)] font-extrabold leading-[0.92] tracking-[-0.04em] mb-6 uppercase">
+                    <h1 className={`${interbold.className} text-[clamp(2.5rem,8vw,8rem)] font-bold leading-[0.92] tracking-[-0.04em] mb-6 uppercase`}>
                         PLATFORM<br />ECOSYSTEM.
                     </h1>
-                    <p className="text-base md:text-[1rem] text-white/50 max-w-[550px] font-light leading-[1.7]">
+                    <p className={`${interregular.className} text-base md:text-[1rem] text-white/50 max-w-[550px] font-normal leading-[1.7]`}>
                         End-to-end products unifying fragmented customer journeys in experience-driven industries — from intelligent ticketing to OTT streaming and rights management.
                     </p>
                 </div>
             </section>
 
             {/* Product Portfolio */}
-            <section className="px-5 md:px-20 py-24 bg-[#111111]">
+            <section className="px-5 md:px-20 py-24 bg-[#171717]">
                 <div className="max-w-7xl mx-auto">
                     <SectionLabel>Our Product Portfolio</SectionLabel>
-                    <h2 className="font-syne text-[clamp(2rem,4.5vw,4rem)] font-extrabold leading-[1.05] tracking-[-0.025em] mb-8 text-white">
+                    <h2 className={`${interbold.className} text-[clamp(2rem,4.5vw,4rem)] font-bold leading-[1.05] tracking-[-0.025em] mb-8 text-white`}>
                         Built from real enterprise <em className="italic text-white">deployments.</em>
                     </h2>
-                    <p className="text-base md:text-[1.1rem] text-white/50 font-light leading-[1.75] max-w-[800px] mb-16 px-1 border-l-2 border-white/10">
+                    <p className={`${interregular.className} text-base md:text-[1.1rem] text-white/50 font-normal leading-[1.75] max-w-[800px] mb-16 px-1 border-l-2 border-white/10`}>
                         Each product represents a repeatable, scalable solution to high-impact business problems — designed to integrate seamlessly into enterprise ecosystems, accelerating AI adoption while reducing time-to-value.
                     </p>
 
                     {/* NUVIO - Featured Product */}
-                    <div className="border border-white/10 bg-[#171717] transition-all hover:border-white/20 mb-10 overflow-hidden">
+                    <div className="border border-white/10 bg-[#111111] transition-all hover:border-[#A6DAFF] mb-10 overflow-hidden">
                         <div className="p-10 md:p-14">
-                            <div className="text-[0.65rem] tracking-[0.2em] uppercase text-white/40 mb-4 border border-white/10 inline-block px-3 py-1.5">
+                            <div className={`${interregular.className} text-[0.65rem] tracking-[0.2em] uppercase text-white/40 mb-4 border border-white/10 inline-block px-3 py-1.5 font-normal`}>
                                 Cinema & Experiences
                             </div>
-                            <h3 className="font-syne text-[2.5rem] md:text-[4rem] font-bold mb-6 text-white leading-none">NUVIO</h3>
-                            <p className="text-base md:text-[1.1rem] text-white/50 leading-[1.7] max-w-[700px]">
+                            <h3 className={`${interbold.className} text-[2.5rem] md:text-[4rem] font-bold mb-6 text-white leading-none`}>NUVIO</h3>
+                            <p className={`${interregular.className} text-base md:text-[1.1rem] text-white/50 leading-[1.7] max-w-[700px] font-normal`}>
                                 End-to-end ticketing and experience platform built for cinemas, attractions, and large-scale venues — with 350K+ transactions processed monthly and 30+ years shaping cinema technology.
                             </p>
                         </div>
@@ -120,7 +107,7 @@ const Page = () => {
                     </div>
 
                     {/* Stats row for Nuvio */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 border border-white/10 bg-[#080808] mb-20 divide-x divide-y md:divide-y-0 divide-white/10">
+                    <div className="grid grid-cols-2 md:grid-cols-4 border border-white/10 bg-[#171717] mb-20 divide-x divide-y md:divide-y-0 divide-white/10">
                         {[
                             { num: "350K+", label: "Monthly Transactions" },
                             { num: "30+", label: "Years in Technology" },
@@ -128,8 +115,8 @@ const Page = () => {
                             { num: "3K+", label: "Screens Powered" },
                         ].map((s, i) => (
                             <div key={i} className="p-8 text-center flex flex-col items-center justify-center">
-                                <div className="font-syne text-[2.2rem] font-extrabold text-white leading-none mb-2">{s.num}</div>
-                                <div className="text-[0.65rem] text-white/40 tracking-[0.05em] uppercase">{s.label}</div>
+                                <div className={`${interbold.className} text-[2.2rem] font-bold text-[#A6DAFF] leading-none mb-2`}>{s.num}</div>
+                                <div className={`${interregular.className} text-[0.65rem] text-white/40 tracking-[0.05em] uppercase font-normal`}>{s.label}</div>
                             </div>
                         ))}
                     </div>
@@ -207,14 +194,14 @@ const Page = () => {
             </section>
 
             {/* CTA Band */}
-            <section className="relative px-5 md:px-20 py-24 bg-[#080808] text-center border-t border-white/10 overflow-hidden">
+            {/* <section className="relative px-5 md:px-20 py-24 bg-[#171717] text-center border-t border-white/10 overflow-hidden">
                 <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_60%_80%_at_50%_50%,rgba(255,255,255,0.03)_0%,transparent_70%)]" />
                 <div className="relative z-10">
-                    <h2 className="font-syne text-[clamp(2rem,5vw,4.5rem)] font-extrabold leading-none tracking-[-0.03em] mb-5 text-white">
+                    <h2 className={`${interbold.className} text-[clamp(2rem,5vw,4.5rem)] font-bold leading-none tracking-[-0.03em] mb-5 text-white`}>
                         Ready to deploy our<br />
                         <em className="italic text-white">platform ecosystem?</em>
                     </h2>
-                    <p className="text-white/50 text-[0.95rem] mb-9">
+                    <p className={`${interregular.className} text-white/50 text-[0.95rem] mb-9 font-normal`}>
                         Let&apos;s match the right product to your business challenge.
                     </p>
                     <div
@@ -224,7 +211,7 @@ const Page = () => {
                         →
                     </div>
                 </div>
-            </section>
+            </section> */}
         </div>
     );
 };

@@ -1,4 +1,6 @@
 "use client";
+import { motion } from "framer-motion";
+import { guptermedium, gupterregular, gupterbold, interextrabold } from "@/fonts";
 import React, { useRef, useEffect, useState } from "react";
 
 /* ─── DATA ─── */
@@ -111,8 +113,7 @@ const StatCard = ({ stat, inView, delay }: { stat: StatItem; inView: boolean; de
         >
             {/* Big Number */}
             <div
-                className="text-[clamp(2.5rem,5vw,4.5rem)] font-[800] leading-none tracking-[-0.04em] text-[#f5f5f0] mb-2.5"
-                style={{ fontFamily: "'Syne', sans-serif" }}
+                className={`${gupterbold.className} text-[clamp(2.5rem,5vw,4.5rem)] leading-none tracking-[-0.04em] text-[#f5f5f0] mb-2.5`}
             >
                 {count}
                 <span className="text-white">{stat.suffix}</span>
@@ -120,8 +121,7 @@ const StatCard = ({ stat, inView, delay }: { stat: StatItem; inView: boolean; de
 
             {/* Label */}
             <div
-                className="text-[0.78rem] text-[rgba(245,245,240,0.5)] uppercase tracking-[0.1em] leading-[1.5]"
-                style={{ fontFamily: "'DM Sans', sans-serif" }}
+                className={`${gupterregular.className} text-[0.78rem] text-[rgba(245,245,240,0.5)] uppercase tracking-[0.1em] leading-[1.5]`}
             >
                 {stat.label}
                 <br />
@@ -168,8 +168,7 @@ const Stats = () => {
             <div className="px-6 pt-16 pb-0 md:px-20 md:pt-20">
                 {/* Section label  */}
                 <div
-                    className="flex items-center gap-2.5 text-[0.68rem] tracking-[0.2em] uppercase text-white mb-4"
-                    style={{ fontFamily: "'DM Sans', sans-serif" }}
+                    className={`${guptermedium.className} flex items-center gap-2.5 text-[0.68rem] tracking-[0.2em] uppercase text-white mb-4`}
                 >
                     <span className="block w-5 h-px bg-white" />
                     Trusted by Visionaries
@@ -177,8 +176,7 @@ const Stats = () => {
 
                 {/* Display heading */}
                 <h2
-                    className="text-[clamp(2rem,4.5vw,4rem)] font-[800] leading-[1.05] tracking-[-0.025em] text-[#f5f5f0] mb-12"
-                    style={{ fontFamily: "'Syne', sans-serif" }}
+                    className={`${interextrabold.className} text-[clamp(2rem,4.5vw,4rem)] leading-[1.05] tracking-[-0.025em] text-[#f5f5f0] mb-12`}
                 >
                     Our Clients
                 </h2>
@@ -192,8 +190,7 @@ const Stats = () => {
                     <select
                         value={activeClient}
                         onChange={(e) => setActiveClient(e.target.value)}
-                        className="w-full bg-[#1a1a1a] border border-[rgba(255,255,255,0.1)] text-white py-5 px-6 rounded-none appearance-none font-[700] uppercase tracking-[0.12em] text-[0.85rem] focus:outline-none focus:border-white transition-colors cursor-pointer"
-                        style={{ fontFamily: "'Syne', sans-serif" }}
+                        className={`${gupterbold.className} w-full bg-[#1a1a1a] border border-[rgba(255,255,255,0.1)] text-white py-5 px-6 rounded-none appearance-none uppercase tracking-[0.12em] text-[0.85rem] focus:outline-none focus:border-white transition-colors cursor-pointer`}
                     >
                         {CLIENTS.map((name) => (
                             <option key={name} value={name} className="bg-[#111] py-2">
@@ -213,33 +210,44 @@ const Stats = () => {
 
             {/* ── Client Logo Row (Desktop Only) ── */}
             <div
-                className="hidden md:flex items-center justify-center flex-wrap border-t border-[rgba(255,255,255,0.08)]"
+                className="hidden md:flex items-center justify-center flex-wrap gap-8 lg:gap-14 border-t border-[rgba(255,255,255,0.08)] px-10"
             >
                 {CLIENTS.map((name, i) => (
                     <button
                         key={name}
                         onClick={() => setActiveClient(name)}
                         className={`
-              flex-1 min-w-[120px] py-8 px-6 md:px-10
-              text-center text-[0.75rem] font-[700] tracking-[0.12em] uppercase
-              transition-all duration-300 relative group
+              ${gupterbold.className} py-8
+              text-center text-[0.75rem] tracking-[0.12em] uppercase
+              transition-colors duration-300 relative group
               ${activeClient === name ? "text-white" : "text-[rgba(245,245,240,0.5)] hover:text-[#f5f5f0]"}
-              ${i < CLIENTS.length - 1 ? "border-r border-[rgba(255,255,255,0.08)]" : ""}
               opacity-0 translate-y-3
             `}
                         style={{
-                            fontFamily: "'Syne', sans-serif",
-                            transitionDelay: `${i * 80}ms`,
+                            transitionDelay: `${i * 60}ms`,
                             ...(inView ? { opacity: 1, transform: "translateY(0)" } : {}),
                         }}
                     >
                         {name}
-                        {/* Active Indicator Line */}
-                        <div
-                            className={`absolute bottom-0 left-0 w-full h-0.5 bg-white transition-transform duration-500 origin-left
-                ${activeClient === name ? "scale-x-100" : "scale-x-0 group-hover:scale-x-50"}
-              `}
-                        />
+                        {/* Apple-Style Gliding Indicator Line */}
+                        {activeClient === name && (
+                            <motion.div
+                                layoutId="activeDesktopClientIndicator"
+                                className="absolute bottom-0 left-0 w-full h-0.5 bg-white shadow-[0_0_12px_rgba(255,255,255,0.6)]"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{
+                                    type: "spring",
+                                    stiffness: 300,
+                                    damping: 30,
+                                }}
+                            />
+                        )}
+                        {/* Hover line for inactive tabs */}
+                        {activeClient !== name && (
+                            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-white/30 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                        )}
                     </button>
                 ))}
             </div>
